@@ -1,0 +1,192 @@
+{% extends 'admin/AdminAllinclude.html' %}
+{% block title %}Manage Employees{% endblock %}
+{% block pagecontant %}
+
+<div class="space-y-8">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900 uppercase tracking-tight">Staff Management</h1>
+            <div class="flex items-center space-x-2 text-xs font-bold uppercase tracking-widest text-gray-400 mt-1">
+                <a href="{% url 'Adminpage' %}" class="hover:text-amber-500 transition-colors">Home</a>
+                <span>/</span>
+                <span class="text-gray-900">Add Employee</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Form Section -->
+        <div class="lg:col-span-5">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-50 bg-gray-50/50">
+                    <h2 class="font-bold text-gray-900 uppercase tracking-tight text-sm">Onboard New Employee</h2>
+                </div>
+                <div class="p-6">
+                    <form method="post" action="Addemployee" enctype="multipart/form-data" class="space-y-4">
+                        {% csrf_token %}
+                        
+                        <div class="space-y-1">
+                            <label class="block text-xs font-bold uppercase text-gray-500">Employee ID</label>
+                            <input type="text" name="Employee_Id" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm" placeholder="e.g. EMP001" required>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="space-y-1">
+                                <label class="block text-xs font-bold uppercase text-gray-500">First Name</label>
+                                <input type="text" name="First_Name" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm" required>
+                            </div>
+                            <div class="space-y-1">
+                                <label class="block text-xs font-bold uppercase text-gray-500">Last Name</label>
+                                <input type="text" name="Last_Name" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm" required>
+                            </div>
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="block text-xs font-bold uppercase text-gray-500">Email</label>
+                            <input type="email" name="Email" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm" required>
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="block text-xs font-bold uppercase text-gray-500">Mobile Number</label>
+                            <input type="text" name="Mobile_Number" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm" required>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="space-y-1">
+                                <label class="block text-xs font-bold uppercase text-gray-500">Joining Date</label>
+                                <input type="date" name="Joining_Date" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm" required>
+                            </div>
+                            <div class="space-y-1">
+                                <label class="block text-xs font-bold uppercase text-gray-500">DOB</label>
+                                <input type="date" name="Dateof_Birth" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm" required>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="space-y-1">
+                                <label class="block text-xs font-bold uppercase text-gray-500">Department</label>
+                                <select class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm" name="Departments" required>
+                                    <option value="Housekeeping">Housekeeping</option>
+                                    <option value="Manager">Manager</option>
+                                    <option value="Chef">Chef</option>
+                                    <option value="Food and Beverage">Food and Beverage</option>
+                                    <option value="Kitchen">Kitchen</option>
+                                    <option value="Security">Security</option>
+                                </select>
+                            </div>
+                            <div class="space-y-1">
+                                <label class="block text-xs font-bold uppercase text-gray-500">Gender</label>
+                                <select class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm" name="Gender" required>
+                                    <option value="MALE">MALE</option>
+                                    <option value="FEMALE">FEMALE</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="block text-xs font-bold uppercase text-gray-500">NID / Personal ID</label>
+                            <input type="text" name="Personal_Identity" pattern="[0-9]*" inputmode="numeric" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm font-bold" placeholder="Numbers only" required>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="space-y-1">
+                                <label class="block text-xs font-bold uppercase text-gray-500">Guardian Name</label>
+                                <input type="text" name="Guardian" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm" required>
+                            </div>
+                            <div class="space-y-1">
+                                <label class="block text-xs font-bold uppercase text-gray-500">Guardian Contact</label>
+                                <input type="text" name="Guardian_Number" pattern="[0-9]*" inputmode="numeric" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm font-bold" placeholder="Numbers only" required>
+                            </div>
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="block text-xs font-bold uppercase text-gray-500">Staff Image</label>
+                            <input type="file" name="Upload_Image" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 text-sm file:mr-4 file:py-1 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-amber-100 file:text-amber-700 hover:file:bg-amber-200 cursor-pointer" required>
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="block text-xs font-bold uppercase text-gray-500">Address</label>
+                            <textarea name="Address" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm" rows="3" required></textarea>
+                        </div>
+
+                        <div class="pt-4 flex space-x-3">
+                            <button type="submit" class="flex-grow bg-emerald-500 hover:bg-emerald-600 text-white font-bold uppercase tracking-widest py-3 rounded-lg text-xs transition-all shadow-sm">
+                                Register Employee
+                            </button>
+                            <button type="reset" class="px-6 border border-gray-200 text-gray-400 hover:bg-gray-50 rounded-lg text-xs font-bold uppercase tracking-widest transition-all">
+                                Clear
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- List Section -->
+        <div class="lg:col-span-7">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-50 bg-gray-50/50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <h2 class="font-bold text-gray-900 uppercase tracking-tight text-sm">Employee Directory</h2>
+                    <form method="post" action="Add_Employee_Search" class="flex gap-2">
+                        {% csrf_token %}
+                        <select class="bg-white border border-gray-200 rounded-lg px-3 py-1.5 text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none" name="departments" required>
+                            <option value="Housekeeping">Housekeeping</option>
+                            <option value="Manager">Manager</option>
+                            <option value="Chef">Chef</option>
+                        </select>
+                        <input type="search" name="serch" class="bg-white border border-gray-200 rounded-lg px-3 py-1.5 text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none" placeholder="Search..." required>
+                        <button type="submit" class="bg-gray-900 text-white p-1.5 rounded-lg hover:bg-black transition-colors">
+                            <i class="fa fa-search text-xs"></i>
+                        </button>
+                    </form>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="text-[10px] font-black uppercase tracking-widest text-gray-400 border-b border-gray-50">
+                                <th class="px-6 py-4">Emp ID</th>
+                                <th class="px-6 py-4">Name</th>
+                                <th class="px-6 py-4">Department</th>
+                                <th class="px-6 py-4 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-50">
+                            {% if data %}
+                            {% for i in data %}
+                            <tr class="hover:bg-gray-50 transition-colors group">
+                                <td class="px-6 py-4 text-sm font-bold text-gray-400">#{{ i.Employee_Id }}</td>
+                                <td class="px-6 py-4">
+                                    <p class="text-sm font-bold text-gray-900">{{ i.First_Name }} {{ i.Last_Name }}</p>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="px-2.5 py-1 rounded bg-blue-50 text-blue-600 text-[10px] font-black uppercase tracking-widest">
+                                        {{ i.Departments }}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <div class="flex items-center justify-end space-x-3">
+                                        <a href="{% url 'Editemployee' id=i.Employee_Id %}" class="text-blue-500 hover:text-blue-700 transition-colors">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+                                        <a href="{% url 'AddEmplopage_Delete' id=i.Employee_Id %}" class="text-rose-500 hover:text-rose-700 transition-colors" onclick="return confirm('Remove this employee?')">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            {% else %}
+                            <tr>
+                                <td colspan="4" class="px-6 py-12 text-center text-gray-400 italic">No staff records found.</td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

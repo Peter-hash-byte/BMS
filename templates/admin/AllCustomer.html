@@ -1,0 +1,153 @@
+{% extends 'admin/AdminAllinclude.html' %}
+{% block title %}Guest Directory{% endblock %}
+{% block pagecontant %}
+
+<div class="space-y-8" x-data="{ activeTab: 'list' }">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900 uppercase tracking-tight">Guest Directory</h1>
+            <div class="flex items-center space-x-2 text-xs font-bold uppercase tracking-widest text-gray-400 mt-1">
+                <a href="{% url 'Adminpage' %}" class="hover:text-amber-500">Home</a>
+                <span>/</span>
+                <span class="text-gray-900">All Customers</span>
+            </div>
+        </div>
+        <a href="{% url 'AddCustomer' %}" class="bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-2.5 rounded-lg text-xs font-black uppercase tracking-widest transition-all shadow-sm flex items-center justify-center">
+            <i class="fa fa-plus mr-2"></i> New Reservation
+        </a>
+    </div>
+
+    <!-- Main Container -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <!-- Tab Navigation -->
+        <div class="px-6 py-4 border-b border-gray-50 bg-gray-50/50 flex items-center justify-between">
+            <div class="flex space-x-4">
+                <button @click="activeTab = 'list'" 
+                        :class="activeTab === 'list' ? 'text-amber-600 border-amber-500' : 'text-gray-400 border-transparent hover:text-gray-600'"
+                        class="px-4 py-2 text-xs font-black uppercase tracking-widest border-b-2 transition-all">
+                    List View
+                </button>
+                <button @click="activeTab = 'grid'" 
+                        :class="activeTab === 'grid' ? 'text-amber-600 border-amber-500' : 'text-gray-400 border-transparent hover:text-gray-600'"
+                        class="px-4 py-2 text-xs font-black uppercase tracking-widest border-b-2 transition-all">
+                    Grid View
+                </button>
+            </div>
+            <div class="hidden sm:block">
+                 <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Total Guests: {{ data|length }}</p>
+            </div>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="p-0">
+            <!-- List View -->
+            <div x-show="activeTab === 'list'" x-transition class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="text-[10px] font-black uppercase tracking-widest text-gray-400 border-b border-gray-50 bg-gray-50/30">
+                            <th class="px-6 py-4">ID</th>
+                            <th class="px-6 py-4">Guest Name</th>
+                            <th class="px-6 py-4">Room</th>
+                            <th class="px-6 py-4">Check In</th>
+                            <th class="px-6 py-4">Status</th>
+                            <th class="px-6 py-4 text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-50">
+                        {% if data %}
+                        {% for i in data %}
+                        <tr class="hover:bg-gray-50/80 transition-colors group">
+                            <td class="px-6 py-4 text-xs font-bold text-gray-400">#{{ i.Customer_Id }}</td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-8 h-8 rounded-full bg-amber-50 flex items-center justify-center text-xs font-black text-amber-600">
+                                        {{ i.First_Name|slice:":1" }}{{ i.Last_Name|slice:":1" }}
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-bold text-gray-900 leading-none">{{ i.First_Name }} {{ i.Last_Name }}</p>
+                                        <p class="text-[10px] text-gray-400 uppercase tracking-tighter mt-1">{{ i.Email }}</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="px-2.5 py-1 rounded bg-gray-100 text-gray-600 text-[10px] font-black uppercase tracking-widest">
+                                    Room {{ i.Room_Number }}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-xs font-medium text-gray-500">{{ i.Check_in }}</td>
+                            <td class="px-6 py-4">
+                                <span class="flex items-center text-[10px] font-black uppercase tracking-widest text-emerald-500">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-2"></span> Active
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-right">
+                                <div class="flex items-center justify-end space-x-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <a href="{% url 'EditCustomer' id=i.Customer_Id %}" class="w-8 h-8 rounded bg-blue-50 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all">
+                                        <i class="fa fa-pencil text-xs"></i>
+                                    </a>
+                                    <a href="{% url 'AllCustpage_Delete' id=i.Customer_Id %}" 
+                                       class="w-8 h-8 rounded bg-rose-50 text-rose-600 flex items-center justify-center hover:bg-rose-600 hover:text-white transition-all"
+                                       onclick="return confirm('Delete this reservation?')">
+                                        <i class="fa fa-trash text-xs"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <tr>
+                            <td colspan="6" class="px-6 py-20 text-center text-gray-400 italic">No guest records found.</td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Grid View -->
+            <div x-show="activeTab === 'grid'" x-transition class="p-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    {% if data %}
+                    {% for i in data %}
+                    <div class="bg-white border border-gray-100 rounded-xl overflow-hidden group hover:shadow-md transition-shadow">
+                        <div class="p-6 text-center space-y-4">
+                            <div class="relative inline-block">
+                                {% if i.Upload_Image %}
+                                <img src="{{ i.Upload_Image.url }}" class="w-20 h-20 rounded-full object-cover border-4 border-amber-50 mx-auto" alt="guest">
+                                {% else %}
+                                <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-auto text-xl font-black text-gray-300 uppercase">
+                                    {{ i.First_Name|slice:":1" }}{{ i.Last_Name|slice:":1" }}
+                                </div>
+                                {% endif %}
+                                <div class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-emerald-500 border-4 border-white"></div>
+                            </div>
+                            <div>
+                                <h4 class="font-black text-gray-900 uppercase tracking-tight">{{ i.First_Name }} {{ i.Last_Name }}</h4>
+                                <p class="text-[10px] font-bold text-amber-600 uppercase tracking-[0.2em] mt-1">{{ i.Select_Room }}</p>
+                            </div>
+                            <div class="pt-4 grid grid-cols-2 gap-4 border-t border-gray-50">
+                                <div>
+                                    <p class="text-[8px] font-black text-gray-400 uppercase tracking-widest">Room</p>
+                                    <p class="text-xs font-bold text-gray-700">{{ i.Room_Number }}</p>
+                                </div>
+                                <div>
+                                    <p class="text-[8px] font-black text-gray-400 uppercase tracking-widest">Check In</p>
+                                    <p class="text-xs font-bold text-gray-700">{{ i.Check_in }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="px-6 py-4 bg-gray-50 flex items-center justify-around opacity-60 group-hover:opacity-100 transition-opacity">
+                            <a href="{% url 'EditCustomer' id=i.Customer_Id %}" class="text-xs font-black uppercase tracking-widest text-blue-600 hover:text-blue-800 transition-colors">Edit</a>
+                            <div class="w-px h-4 bg-gray-200"></div>
+                            <a href="{% url 'AllCustpage_Delete' id=i.Customer_Id %}" class="text-xs font-black uppercase tracking-widest text-rose-600 hover:text-rose-800 transition-colors">Delete</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

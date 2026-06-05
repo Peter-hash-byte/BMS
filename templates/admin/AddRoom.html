@@ -1,0 +1,138 @@
+{% extends 'admin/AdminAllinclude.html' %}
+{% block title %}Manage Rooms{% endblock %}
+{% block pagecontant %}
+
+<div class="space-y-8">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900 uppercase tracking-tight">Room Inventory</h1>
+            <div class="flex items-center space-x-2 text-xs font-bold uppercase tracking-widest text-gray-400 mt-1">
+                <a href="{% url 'Adminpage' %}" class="hover:text-amber-500">Home</a>
+                <span>/</span>
+                <span class="text-gray-900">Add Rooms</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Form Section -->
+        <div class="lg:col-span-5">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-50 bg-gray-50/50">
+                    <h2 class="font-bold text-gray-900 uppercase tracking-tight text-sm">Add New Room</h2>
+                </div>
+                <div class="p-6">
+                    <form method="post" action="Add_room" enctype="multipart/form-data" class="space-y-4">
+                        {% csrf_token %}
+                        <div class="space-y-1">
+                            <label class="block text-xs font-bold uppercase text-gray-500">Room Number</label>
+                            <select class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm" name="Room_Number">
+                                <option value="Room Number">Select Room #</option>
+                                <option value="Room101">Room 101</option>
+                                <option value="Room102">Room 102</option>
+                                <option value="Room103">Room 103</option>
+                                <option value="Room104">Room 104</option>
+                            </select>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="block text-xs font-bold uppercase text-gray-500">Room Type</label>
+                            <select class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm" name="Room_Type">
+                                <option value="Select Room">Select Type</option>
+                                <option value="Delux">Delux</option>
+                                <option value="Super Delux">Super Delux</option>
+                                <option value="Single">Single</option>
+                                <option value="Double">Double</option>
+                            </select>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="block text-xs font-bold uppercase text-gray-500">Room Floor</label>
+                            <select class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm" name="Room_Floor" required>
+                                <option value="Room Floor">Select Floor</option>
+                                <option value="Floor_G">Ground Floor</option>
+                                <option value="Floor_First">First Floor</option>
+                                <option value="Floor_Second">Second Floor</option>
+                                <option value="Floor_Thirt">Third Floor</option>
+                            </select>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="block text-xs font-bold uppercase text-gray-500">Room Facility</label>
+                            <input type="text" name="Room_Facility" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm" placeholder="e.g. WiFi, AC, Balcony" required>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="block text-xs font-bold uppercase text-gray-500">Room Price ($)</label>
+                            <input type="text" name="Room_Price" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm" placeholder="Price per night" required>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="block text-xs font-bold uppercase text-gray-500">Room Image</label>
+                            <input type="file" name="Room_Image" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 text-sm file:mr-4 file:py-1 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-amber-100 file:text-amber-700 hover:file:bg-amber-200 cursor-pointer" required>
+                        </div>
+                        <div class="pt-4 flex space-x-3">
+                            <button type="submit" class="flex-grow bg-emerald-500 hover:bg-emerald-600 text-white font-bold uppercase tracking-widest py-3 rounded-lg text-xs transition-all shadow-sm">
+                                Create Room
+                            </button>
+                            <button type="reset" class="px-6 border border-gray-200 text-gray-400 hover:bg-gray-50 rounded-lg text-xs font-bold uppercase tracking-widest transition-all">
+                                Clear
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- List Section -->
+        <div class="lg:col-span-7">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-50 bg-gray-50/50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <h2 class="font-bold text-gray-900 uppercase tracking-tight text-sm">Room Search & Quick View</h2>
+                    <form method="post" action="Add_Room_Search" class="flex gap-2">
+                        {% csrf_token %}
+                        <input type="search" name="serch" class="bg-white border border-gray-200 rounded-lg px-3 py-1.5 text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none" placeholder="Search Number..." required>
+                        <button type="submit" class="bg-gray-900 text-white p-1.5 rounded-lg hover:bg-black transition-colors">
+                            <i class="fa fa-search text-xs"></i>
+                        </button>
+                    </form>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="text-[10px] font-black uppercase tracking-widest text-gray-400 border-b border-gray-50">
+                                <th class="px-6 py-4">Room #</th>
+                                <th class="px-6 py-4">Type</th>
+                                <th class="px-6 py-4">Price</th>
+                                <th class="px-6 py-4">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-50">
+                            {% if data %}
+                            {% for i in data %}
+                            <tr class="hover:bg-gray-50 transition-colors text-sm">
+                                <td class="px-6 py-4 font-bold text-gray-900">{{ i.Room_Number }}</td>
+                                <td class="px-6 py-4 text-gray-600">{{ i.Room_Type }}</td>
+                                <td class="px-6 py-4 font-medium text-emerald-600">${{ i.Room_Price }}</td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center space-x-4">
+                                        <a href="{% url 'EditRooms' id=i.Id %}" class="text-blue-500 hover:text-blue-700 transition-colors">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+                                        <a href="{% url 'AddRooms_Delete' id=i.Id %}" class="text-rose-500 hover:text-rose-700 transition-colors" onclick="return confirm('Delete this room?')">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            {% else %}
+                            <tr>
+                                <td colspan="4" class="px-6 py-12 text-center text-gray-400 italic">No rooms in inventory.</td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

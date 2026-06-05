@@ -1,0 +1,174 @@
+{% extends 'admin/AdminAllinclude.html' %}
+{% block title %}New Reservation{% endblock %}
+{% block pagecontant %}
+
+<div class="space-y-8">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900 uppercase tracking-tight">Front Desk</h1>
+            <div class="flex items-center space-x-2 text-xs font-bold uppercase tracking-widest text-gray-400 mt-1">
+                <a href="{% url 'Adminpage' %}" class="hover:text-amber-500">Home</a>
+                <span>/</span>
+                <span class="text-gray-900">New Reservation</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Form Section -->
+        <div class="lg:col-span-5">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-50 bg-gray-50/50">
+                    <h2 class="font-bold text-gray-900 uppercase tracking-tight text-sm">Guest Check-In</h2>
+                </div>
+                <div class="p-6">
+                    <form method="post" action="AddCustomer" enctype="multipart/form-data" class="space-y-6">
+                        {% csrf_token %}
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-1">
+                                <label class="block text-xs font-bold uppercase text-gray-500">Check In</label>
+                                <input type="date" name="Check_in" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm" required>
+                            </div>
+                            <div class="space-y-1">
+                                <label class="block text-xs font-bold uppercase text-gray-500">Check Out</label>
+                                <input type="date" name="Check_out" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm" required>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-1">
+                                <label class="block text-xs font-bold uppercase text-gray-500">First Name</label>
+                                <input type="text" name="First_Name" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm" placeholder="First Name" required>
+                            </div>
+                            <div class="space-y-1">
+                                <label class="block text-xs font-bold uppercase text-gray-500">Last Name</label>
+                                <input type="text" name="Last_Name" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm" placeholder="Last Name" required>
+                            </div>
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="block text-xs font-bold uppercase text-gray-500">Email Address</label>
+                            <input type="email" name="Email" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm" placeholder="guest@example.com" required>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="space-y-1">
+                                <label class="block text-xs font-bold uppercase text-gray-500">Adults</label>
+                                <select class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm" name="ADULT">
+                                    <option value="1 ADULT">1</option>
+                                    <option value="2 ADULT">2</option>
+                                    <option value="3 ADULT">3</option>
+                                </select>
+                            </div>
+                            <div class="space-y-1">
+                                <label class="block text-xs font-bold uppercase text-gray-500">Children</label>
+                                <select class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm" name="CHILDREN">
+                                    <option value="0 CHILDREN">0</option>
+                                    <option value="1 CHILDREN">1</option>
+                                </select>
+                            </div>
+                            <div class="space-y-1">
+                                <label class="block text-xs font-bold uppercase text-gray-500">Total</label>
+                                <input type="text" name="Total_Person" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm" placeholder="Total" required>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-1">
+                                <label class="block text-xs font-bold uppercase text-gray-500">Room Type</label>
+                                <select class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm" name="Select_Room">
+                                    <option value="Delux">Delux</option>
+                                    <option value="Super Delux">Super Delux</option>
+                                </select>
+                            </div>
+                            <div class="space-y-1">
+                                <label class="block text-xs font-bold uppercase text-gray-500">Room #</label>
+                                <select class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm" name="Room_Number">
+                                    <option value="Room101">Room 101</option>
+                                    <option value="Room102">Room 102</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:col-span-2 gap-4">
+                            <div class="space-y-1">
+                                <label class="block text-xs font-bold uppercase text-gray-500">Identity Number (NID/Passport) <span class="text-rose-500">*</span></label>
+                                <input type="text" name="Personal_Identity" pattern="[0-9]*" inputmode="numeric" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm font-bold" placeholder="Numbers only" required>
+                            </div>
+                        </div>
+
+                        <div class="pt-4 flex space-x-3">
+                            <button type="submit" class="flex-grow bg-emerald-500 hover:bg-emerald-600 text-white font-bold uppercase tracking-widest py-3 rounded-lg text-xs transition-all shadow-sm">
+                                Register Guest
+                            </button>
+                            <button type="reset" class="px-6 border border-gray-200 text-gray-400 hover:bg-gray-50 rounded-lg text-xs font-bold uppercase tracking-widest transition-all">
+                                Clear
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Section -->
+        <div class="lg:col-span-7">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-50 bg-gray-50/50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <h2 class="font-bold text-gray-900 uppercase tracking-tight text-sm">Guest Search</h2>
+                    <form method="post" action="Search" class="flex gap-2">
+                        {% csrf_token %}
+                        <select class="bg-white border border-gray-200 rounded-lg px-3 py-1.5 text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none" name="departments">
+                            <option value="Country">Country</option>
+                            <option value="Kenya">Kenya</option>
+                        </select>
+                        <input type="search" name="serch" class="bg-white border border-gray-200 rounded-lg px-3 py-1.5 text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none" placeholder="Search Guest..." required>
+                        <button type="submit" class="bg-gray-900 text-white p-1.5 rounded-lg hover:bg-black transition-colors">
+                            <i class="fa fa-search text-xs"></i>
+                        </button>
+                    </form>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="text-[10px] font-black uppercase tracking-widest text-gray-400 border-b border-gray-50">
+                                <th class="px-6 py-4">Guest</th>
+                                <th class="px-6 py-4">Room #</th>
+                                <th class="px-6 py-4">Check In</th>
+                                <th class="px-6 py-4 text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-50">
+                            {% if data %}
+                            {% for i in data %}
+                            <tr class="hover:bg-gray-50 transition-colors text-sm">
+                                <td class="px-6 py-4 font-bold text-gray-900">{{ i.First_Name }} {{ i.Last_Name }}</td>
+                                <td class="px-6 py-4 text-gray-600">#{{ i.Room_Number }}</td>
+                                <td class="px-6 py-4 text-gray-500">{{ i.Check_in }}</td>
+                                <td class="px-6 py-4 text-right">
+                                    <div class="flex items-center justify-end space-x-4">
+                                        <a href="{% url 'EditCustomer' id=i.Customer_Id %}" class="text-blue-500 hover:text-blue-700 transition-colors">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+                                        <a href="{% url 'AddCustpage_Delete' id=i.Customer_Id %}" class="text-rose-500 hover:text-rose-700 transition-colors" onclick="return confirm('Delete record?')">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            {% else %}
+                            <tr>
+                                <td colspan="4" class="px-6 py-12 text-center text-gray-400 italic">No guests found.</td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

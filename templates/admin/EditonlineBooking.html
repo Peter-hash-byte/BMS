@@ -1,0 +1,154 @@
+{% extends 'admin/AdminAllinclude.html' %}
+{% block title %}Edit Online Booking{% endblock %}
+{% block pagecontant %}
+
+<div class="max-w-4xl mx-auto space-y-8">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900 uppercase tracking-tight">Edit Online Booking</h1>
+            <div class="flex items-center space-x-2 text-xs font-bold uppercase tracking-widest text-gray-400 mt-1">
+                <a href="{% url 'Adminpage' %}" class="hover:text-amber-500 transition-colors">Home</a>
+                <span>/</span>
+                <a href="{% url 'online_Booking_info' %}" class="hover:text-amber-500 transition-colors">Online Bookings</a>
+                <span>/</span>
+                <span class="text-gray-900">Edit Booking</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form Card -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="px-6 py-4 border-b border-gray-50 bg-gray-50/50">
+            <h2 class="font-bold text-gray-900 uppercase tracking-tight text-sm flex items-center">
+                <i class="fa fa-globe mr-2 text-amber-500"></i> Reservation: {{ data.Name }} {{ data.Surname }}
+            </h2>
+        </div>
+        <div class="p-8">
+            <form method="POST" action="" enctype="multipart/form-data" class="space-y-6">
+                {% csrf_token %}
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- ID & NID -->
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold uppercase text-gray-500">Booking ID</label>
+                        <input type="text" name="Id" value="{{ data.Id }}" readonly 
+                               class="w-full bg-gray-100 border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-500 cursor-not-allowed outline-none">
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold uppercase text-gray-500">NID / Identity Number</label>
+                        <input type="text" name="Nid_No" value="{{ data.Nid_No }}" 
+                               class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
+                    </div>
+
+                    <!-- Stay Dates -->
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold uppercase text-gray-500">Check In Date</label>
+                        <input type="date" name="Check_in" value="{{ data.Check_in }}" 
+                               class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold uppercase text-gray-500">Check Out Date</label>
+                        <input type="date" name="Check_out" value="{{ data.Check_out }}" 
+                               class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
+                    </div>
+
+                    <!-- Occupancy -->
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold uppercase text-gray-500">Adults</label>
+                        <select name="ADULT" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
+                            <option value="ADULT" {% if data.ADULT == "ADULT" %}selected{% endif %}>ADULT</option>
+                            <option value="1 ADULT" {% if data.ADULT == "1 ADULT" %}selected{% endif %}>1 ADULT</option>
+                            <option value="2 ADULT" {% if data.ADULT == "2 ADULT" %}selected{% endif %}>2 ADULT</option>
+                            <option value="3 ADULT" {% if data.ADULT == "3 ADULT" %}selected{% endif %}>3 ADULT</option>
+                            <option value="4 ADULT" {% if data.ADULT == "4 ADULT" %}selected{% endif %}>4 ADULT</option>
+                        </select>
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold uppercase text-gray-500">Children</label>
+                        <select name="CHILDREN" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
+                            <option value="CHILDREN" {% if data.CHILDREN == "CHILDREN" %}selected{% endif %}>CHILDREN</option>
+                            <option value="1 CHILDREN" {% if data.CHILDREN == "1 CHILDREN" %}selected{% endif %}>1 CHILDREN</option>
+                            <option value="2 CHILDREN" {% if data.CHILDREN == "2 CHILDREN" %}selected{% endif %}>2 CHILDREN</option>
+                            <option value="3 CHILDREN" {% if data.CHILDREN == "3 CHILDREN" %}selected{% endif %}>3 CHILDREN</option>
+                            <option value="4 CHILDREN" {% if data.CHILDREN == "4 CHILDREN" %}selected{% endif %}>4 CHILDREN</option>
+                        </select>
+                    </div>
+
+                    <!-- Guest Details -->
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold uppercase text-gray-500">First Name</label>
+                        <input type="text" name="Name" value="{{ data.Name }}" 
+                               class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold uppercase text-gray-500">Last Name</label>
+                        <input type="text" name="Surname" value="{{ data.Surname }}" 
+                               class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold uppercase text-gray-500">Email Address</label>
+                        <input type="email" name="Email" value="{{ data.Email }}" 
+                               class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold uppercase text-gray-500">Phone Number</label>
+                        <input type="text" name="Phone_Number" value="{{ data.Phone_Number }}" 
+                               class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
+                    </div>
+
+                    <!-- Location -->
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold uppercase text-gray-500">City</label>
+                        <input type="text" name="City" value="{{ data.City }}" 
+                               class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold uppercase text-gray-500">Country</label>
+                        <input type="text" name="Country" value="{{ data.Country }}" 
+                               class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
+                    </div>
+
+                    <div class="space-y-1 md:col-span-2">
+                        <label class="block text-xs font-bold uppercase text-gray-500">Full Address</label>
+                        <input type="text" name="Address" value="{{ data.Address }}" 
+                               class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
+                    </div>
+
+                    <!-- Image -->
+                    <div class="space-y-1 md:col-span-2">
+                        <label class="block text-xs font-bold uppercase text-gray-500">Identity Image</label>
+                        <div class="mt-2 flex items-center space-x-4">
+                            {% if data.Img %}
+                            <img src="{{ data.Img.url }}" class="w-16 h-16 rounded-lg object-cover border border-gray-200" alt="Current image">
+                            {% endif %}
+                            <input type="file" name="Img" 
+                                   class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 text-sm file:mr-4 file:py-1 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-amber-100 file:text-amber-700 hover:file:bg-amber-200 cursor-pointer">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-8 flex flex-col sm:flex-row gap-4 border-t border-gray-100">
+                    <button type="submit" class="flex-grow bg-emerald-500 hover:bg-emerald-600 text-white font-bold uppercase tracking-widest py-3 rounded-lg text-xs transition-all shadow-sm flex items-center justify-center">
+                        <i class="fa fa-save mr-2"></i> Update Reservation
+                    </button>
+                    <button type="reset" class="px-8 border border-gray-200 text-gray-400 hover:bg-gray-50 rounded-lg text-xs font-bold uppercase tracking-widest transition-all">
+                        Reset Form
+                    </button>
+                    <a href="{% url 'online_Booking_info' %}" class="px-8 border border-gray-200 text-gray-600 hover:bg-gray-100 rounded-lg text-xs font-bold uppercase tracking-widest transition-all flex items-center justify-center">
+                        Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

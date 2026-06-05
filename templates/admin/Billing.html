@@ -1,0 +1,176 @@
+{% extends 'admin/AdminAllinclude.html' %}
+{% block title %}Guest Folio - Billing{% endblock %}
+{% block pagecontant %}
+
+<div class="space-y-8">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900 uppercase tracking-tight">Guest Billing Folio</h1>
+            <p class="text-sm text-gray-500 uppercase tracking-widest mt-1">Management of Charges & manual payments</p>
+        </div>
+        <div class="flex items-center space-x-3">
+             <button onclick="window.print()" class="bg-slate-900 text-white px-6 py-2 rounded-lg text-xs font-black uppercase tracking-widest hover:bg-black transition-all flex items-center shadow-sm">
+                <i class="fa fa-print mr-2"></i> Print Invoice
+            </button>
+        </div>
+    </div>
+
+    <!-- Guest Summary -->
+    <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 flex flex-col md:flex-row justify-between items-center gap-8">
+        <div class="flex items-center space-x-6">
+            <div class="w-16 h-16 rounded-full bg-slate-900 text-amber-500 flex items-center justify-center text-2xl font-black">
+                {% if type == 'online' %}{{ booking.Name|slice:":1" }}{{ booking.Surname|slice:":1" }}{% else %}{{ booking.First_Name|slice:":1" }}{{ booking.Last_Name|slice:":1" }}{% endif %}
+            </div>
+            <div>
+                <h3 class="text-xl font-black text-slate-900 uppercase tracking-tight">{% if type == 'online' %}{{ booking.Name }} {{ booking.Surname }}{% else %}{{ booking.First_Name }} {{ booking.Last_Name }}{% endif %}</h3>
+                <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mt-1">Room #{{ booking.Room_No|default:booking.Room_Number }} | ID: #{{ id }}</p>
+            </div>
+        </div>
+        <div class="flex gap-12 text-center">
+            <div>
+                <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Check In</p>
+                <p class="text-sm font-bold text-slate-700">{{ booking.Check_in }}</p>
+            </div>
+            <div>
+                <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Check Out</p>
+                <p class="text-sm font-bold text-slate-700">{{ booking.Check_out }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Financial Status -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 text-center space-y-2">
+            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Total Charges</p>
+            <h4 class="text-2xl font-black text-slate-900">KES {{ total_charges }}</h4>
+        </div>
+        <div class="bg-emerald-50 p-6 rounded-2xl border border-emerald-100 text-center space-y-2">
+            <p class="text-[10px] font-black text-emerald-600 uppercase tracking-widest">Total Paid</p>
+            <h4 class="text-2xl font-black text-emerald-600">KES {{ total_payments }}</h4>
+        </div>
+        <div class="{% if balance > 0 %}bg-rose-50 border-rose-100{% else %}bg-emerald-50 border-emerald-100{% endif %} p-6 rounded-2xl border text-center space-y-2">
+            <p class="text-[10px] font-black {% if balance > 0 %}text-rose-600{% else %}text-emerald-600{% endif %} uppercase tracking-widest">Outstanding Balance</p>
+            <h4 class="text-2xl font-black {% if balance > 0 %}text-rose-600{% else %}text-emerald-600{% endif %}">KES {{ balance }}</h4>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Folio Table -->
+        <div class="lg:col-span-8 space-y-8">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                <div class="px-6 py-4 border-b border-slate-50 bg-slate-50/50">
+                    <h2 class="font-black text-slate-900 uppercase tracking-tight text-xs">Transaction History (Folio)</h2>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="text-[10px] font-black uppercase tracking-widest text-gray-400 border-b border-gray-50 bg-gray-50/30">
+                                <th class="px-6 py-4">Date</th>
+                                <th class="px-6 py-4">Type</th>
+                                <th class="px-6 py-4">Description</th>
+                                <th class="px-6 py-4 text-right">Debit</th>
+                                <th class="px-6 py-4 text-right">Credit</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-50">
+                            <!-- Charges -->
+                            {% for c in charges %}
+                            <tr class="text-sm">
+                                <td class="px-6 py-4 text-xs text-gray-400">{{ c.Date }}</td>
+                                <td class="px-6 py-4"><span class="px-2 py-0.5 rounded bg-blue-50 text-blue-600 text-[10px] font-black uppercase">{{ c.Charge_Type }}</span></td>
+                                <td class="px-6 py-4 text-slate-700">{{ c.Description }}</td>
+                                <td class="px-6 py-4 text-right font-bold text-slate-900">KES {{ c.Amount }}</td>
+                                <td class="px-6 py-4 text-right text-gray-300">--</td>
+                            </tr>
+                            {% endfor %}
+                            <!-- Payments -->
+                            {% for p in payments %}
+                            <tr class="text-sm bg-emerald-50/20">
+                                <td class="px-6 py-4 text-xs text-gray-400">{{ p.Date }}</td>
+                                <td class="px-6 py-4"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 text-[10px] font-black uppercase">Payment</span></td>
+                                <td class="px-6 py-4 text-slate-700">Manual ({{ p.Payment_Method }}) - #{{ p.Receipt_Number }}</td>
+                                <td class="px-6 py-4 text-right text-gray-300">--</td>
+                                <td class="px-6 py-4 text-right font-bold text-emerald-600">KES {{ p.Amount_Paid }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr class="bg-slate-50 font-black text-slate-900 border-t border-slate-100">
+                                <td colspan="3" class="px-6 py-4 text-right uppercase tracking-widest text-xs">Final Settlement</td>
+                                <td colspan="2" class="px-6 py-4 text-right">KES {{ balance }}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Billing Controls -->
+        <div class="lg:col-span-4 space-y-8">
+            <!-- Add Charge -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
+                <div class="px-6 py-4 border-b border-slate-50 bg-slate-50/50">
+                    <h2 class="font-black text-slate-900 uppercase tracking-tight text-xs">Add New Charge</h2>
+                </div>
+                <div class="p-6">
+                    <form method="POST" action="" class="space-y-4">
+                        {% csrf_token %}
+                        <input type="hidden" name="add_charge" value="1">
+                        <div class="space-y-1">
+                            <label class="block text-[10px] font-black uppercase text-slate-500">Service Type</label>
+                            <select name="charge_type" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-xs font-bold outline-none focus:ring-2 focus:ring-amber-500/20 transition-all">
+                                <option value="Restaurant">Restaurant / Meal</option>
+                                <option value="Laundry">Laundry Service</option>
+                                <option value="Conference">Conference Room</option>
+                                <option value="Other">Miscellaneous</option>
+                            </select>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="block text-[10px] font-black uppercase text-slate-500">Description</label>
+                            <input type="text" name="description" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-xs font-bold outline-none" placeholder="e.g. Dinner for 2" required>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="block text-[10px] font-black uppercase text-slate-500">Amount (KES)</label>
+                            <input type="number" name="amount" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-xs font-bold outline-none" required>
+                        </div>
+                        <button type="submit" class="w-full bg-slate-900 text-white font-black uppercase tracking-widest py-3 rounded-lg text-[10px] shadow-sm">Post Charge</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Record Payment -->
+            <div class="bg-emerald-600 rounded-xl shadow-xl overflow-hidden text-white">
+                <div class="px-6 py-4 border-b border-white/10 bg-black/10">
+                    <h2 class="font-black uppercase tracking-tight text-xs">Record Manual Payment</h2>
+                </div>
+                <div class="p-6">
+                    <form method="POST" action="" class="space-y-4">
+                        {% csrf_token %}
+                        <input type="hidden" name="add_payment" value="1">
+                        <div class="space-y-1">
+                            <label class="block text-[10px] font-black uppercase text-emerald-100">Payment Method</label>
+                            <select name="method" class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-xs font-bold text-white outline-none">
+                                <option value="M-Pesa" class="text-slate-900">M-Pesa</option>
+                                <option value="Cash" class="text-slate-900">Cash</option>
+                                <option value="Card" class="text-slate-900">Credit/Debit Card</option>
+                                <option value="Bank Transfer" class="text-slate-900">Bank Transfer</option>
+                            </select>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="block text-[10px] font-black uppercase text-emerald-100">Amount Collected</label>
+                            <input type="number" name="amount" class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-xs font-bold text-white outline-none" required>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="block text-[10px] font-black uppercase text-emerald-100">Receipt / Transaction ID</label>
+                            <input type="text" name="receipt" class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-xs font-bold text-white outline-none" placeholder="e.g. QWE123RTY" required>
+                        </div>
+                        <button type="submit" class="w-full bg-white text-emerald-600 font-black uppercase tracking-widest py-3 rounded-lg text-[10px] shadow-lg">Submit Payment</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

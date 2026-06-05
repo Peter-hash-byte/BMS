@@ -1,0 +1,125 @@
+{% extends 'admin/AdminAllinclude.html' %}
+{% block title %}Operational Reports{% endblock %}
+{% block pagecontant %}
+
+<div class="space-y-8">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900 uppercase tracking-tight">Management Reports</h1>
+            <p class="text-sm text-gray-500 uppercase tracking-widest mt-1">Property Performance for {{ today }}</p>
+        </div>
+        <div class="flex items-center space-x-3">
+             <button onclick="window.print()" class="bg-slate-900 text-white px-6 py-2 rounded-lg text-xs font-black uppercase tracking-widest hover:bg-black transition-all flex items-center shadow-sm">
+                <i class="fa fa-print mr-2"></i> Print Report
+            </button>
+        </div>
+    </div>
+
+    <!-- Summary Metrics -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Revenue Card -->
+        <div class="bg-emerald-600 p-8 rounded-2xl shadow-xl text-white relative overflow-hidden group">
+            <div class="absolute -right-4 -bottom-4 text-9xl text-white/10 group-hover:rotate-12 transition-transform duration-700">
+                <i class="fa fa-money"></i>
+            </div>
+            <div class="relative z-10 space-y-4">
+                <p class="text-xs font-black uppercase tracking-[0.2em] text-emerald-100">Daily Revenue</p>
+                <h3 class="text-4xl font-black">KES {{ revenue_today }}</h3>
+                <div class="pt-4 border-t border-white/20 grid grid-cols-2 gap-4">
+                    <div>
+                        <p class="text-[10px] uppercase font-bold text-emerald-100">M-Pesa</p>
+                        <p class="font-bold text-sm">KES {{ mpesa_revenue }}</p>
+                    </div>
+                    <div>
+                        <p class="text-[10px] uppercase font-bold text-emerald-100">Cash</p>
+                        <p class="font-bold text-sm">KES {{ cash_revenue }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Occupancy Card -->
+        <div class="bg-blue-600 p-8 rounded-2xl shadow-xl text-white relative overflow-hidden group">
+            <div class="absolute -right-4 -bottom-4 text-9xl text-white/10 group-hover:rotate-12 transition-transform duration-700">
+                <i class="fa fa-bed"></i>
+            </div>
+            <div class="relative z-10 space-y-4">
+                <p class="text-xs font-black uppercase tracking-[0.2em] text-blue-100">Room Occupancy</p>
+                <h3 class="text-4xl font-black">{{ occupancy_pct }}%</h3>
+                <div class="pt-4 border-t border-white/20">
+                    <p class="text-[10px] uppercase font-bold text-blue-100">{{ occupied_rooms }} of {{ total_rooms }} Rooms Occupied</p>
+                    <div class="w-full h-1.5 bg-blue-900/50 rounded-full mt-2 overflow-hidden">
+                        <div class="h-full bg-white rounded-full" style="width: {{ occupancy_pct }}%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Traffic Card -->
+        <div class="bg-amber-500 p-8 rounded-2xl shadow-xl text-slate-900 relative overflow-hidden group">
+            <div class="absolute -right-4 -bottom-4 text-9xl text-slate-950/10 group-hover:rotate-12 transition-transform duration-700">
+                <i class="fa fa-exchange"></i>
+            </div>
+            <div class="relative z-10 space-y-4">
+                <p class="text-xs font-black uppercase tracking-[0.2em] text-slate-700">Guest Traffic</p>
+                <h3 class="text-4xl font-black">{{ arrivals }} Arrivals</h3>
+                <div class="pt-4 border-t border-slate-900/10">
+                    <p class="text-[10px] uppercase font-bold text-slate-700">Departures Today: {{ departures }}</p>
+                    <p class="text-[10px] uppercase font-bold text-slate-700 mt-1 italic leading-none">Net Guest Flow: {{ arrivals|add:departures }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detailed Section -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Room Inventory Breakdown -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+            <div class="px-6 py-4 border-b border-slate-50 bg-slate-50/50">
+                <h2 class="font-black text-slate-900 uppercase tracking-tight text-xs">Inventory Breakdown</h2>
+            </div>
+            <div class="p-8 space-y-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+                        <span class="text-xs font-bold text-slate-600 uppercase">Available / Ready</span>
+                    </div>
+                    <span class="text-sm font-black text-slate-900">{{ available_rooms }} Rooms</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <span class="w-3 h-3 rounded-full bg-blue-500"></span>
+                        <span class="text-xs font-bold text-slate-600 uppercase">Occupied</span>
+                    </div>
+                    <span class="text-sm font-black text-slate-900">{{ occupied_rooms }} Rooms</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <span class="w-3 h-3 rounded-full bg-rose-500"></span>
+                        <span class="text-xs font-bold text-slate-600 uppercase">Dirty (Pending Clean)</span>
+                    </div>
+                    <span class="text-sm font-black text-slate-900">{{ dirty_rooms }} Rooms</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+                        <span class="text-xs font-bold text-slate-600 uppercase">In Maintenance</span>
+                    </div>
+                    <span class="text-sm font-black text-slate-900">{{ maintenance_rooms }} Rooms</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- System Activity Note -->
+        <div class="bg-slate-900 p-8 rounded-2xl shadow-lg text-white flex flex-col justify-center text-center space-y-6">
+            <i class="fa fa-info-circle text-4xl text-amber-500"></i>
+            <h4 class="text-xl font-black uppercase tracking-widest leading-tight">Data Integrity Notice</h4>
+            <p class="text-sm text-slate-400 leading-relaxed italic">
+                These reports are generated based on manual payment records and live room status transitions. Ensure all Walk-in and Online check-outs are processed promptly to maintain accurate occupancy metrics.
+            </p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

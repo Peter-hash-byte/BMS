@@ -1,0 +1,167 @@
+{% extends 'admin/AdminAllinclude.html' %}
+{% block title %}Edit Employee Record{% endblock %}
+{% block pagecontant %}
+
+<div class="max-w-4xl mx-auto space-y-8">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900 uppercase tracking-tight">Edit Employee</h1>
+            <div class="flex items-center space-x-2 text-xs font-bold uppercase tracking-widest text-gray-400 mt-1">
+                <a href="{% url 'Adminpage' %}" class="hover:text-amber-500 transition-colors">Home</a>
+                <span>/</span>
+                <a href="{% url 'Addemployee' %}" class="hover:text-amber-500 transition-colors">Employees</a>
+                <span>/</span>
+                <span class="text-gray-900">Edit Staff</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form Card -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="px-6 py-4 border-b border-gray-50 bg-gray-50/50">
+            <h2 class="font-bold text-gray-900 uppercase tracking-tight text-sm flex items-center">
+                <i class="fa fa-user-cog mr-2 text-amber-500"></i> Employee Profile: {{ data.First_Name }} {{ data.Last_Name }}
+            </h2>
+        </div>
+        <div class="p-8">
+            <form method="POST" action="" enctype="multipart/form-data" class="space-y-6">
+                {% csrf_token %}
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- ID & Identity -->
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold uppercase text-gray-500">Employee ID</label>
+                        <input type="text" name="Employee_Id" value="{{ data.Employee_Id }}" readonly 
+                               class="w-full bg-gray-100 border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-500 cursor-not-allowed outline-none">
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold uppercase text-gray-500">National Identity (NID)</label>
+                        <input type="text" name="Personal_Identity" value="{{ data.Personal_Identity }}" 
+                               class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
+                    </div>
+
+                    <!-- Name -->
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold uppercase text-gray-500">First Name</label>
+                        <input type="text" name="First_Name" value="{{ data.First_Name }}" 
+                               class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold uppercase text-gray-500">Last Name</label>
+                        <input type="text" name="Last_Name" value="{{ data.Last_Name }}" 
+                               class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
+                    </div>
+
+                    <!-- Contact -->
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold uppercase text-gray-500">Work Email</label>
+                        <input type="email" name="Email" value="{{ data.Email }}" 
+                               class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold uppercase text-gray-500">Mobile Number</label>
+                        <input type="text" name="Mobile_Number" value="{{ data.Mobile_Number }}" 
+                               class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
+                    </div>
+
+                    <!-- Dates -->
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold uppercase text-gray-500">Joining Date</label>
+                        <input type="date" name="Joining_Date" value="{{ data.Joining_Date|date:'Y-m-d' }}" 
+                               class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold uppercase text-gray-500">Date of Birth</label>
+                        <input type="date" name="Dateof_Birth" value="{{ data.Dateof_Birth|date:'Y-m-d' }}" 
+                               class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
+                    </div>
+
+                    <!-- Dept & Gender -->
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold uppercase text-gray-500">Department</label>
+                        <select name="Departments" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
+                            <option value="Housekeeping" {% if data.Departments == "Housekeeping" %}selected{% endif %}>Housekeeping</option>
+                            <option value="Kitchen" {% if data.Departments == "Kitchen" %}selected{% endif %}>Kitchen</option>
+                            <option value="Security" {% if data.Departments == "Security" %}selected{% endif %}>Security</option>
+                            <option value="Manager" {% if data.Departments == "Manager" %}selected{% endif %}>Manager</option>
+                            <option value="Chef" {% if data.Departments == "Chef" %}selected{% endif %}>Chef</option>
+                            <option value="Food and Beverage" {% if data.Departments == "Food and Beverage" %}selected{% endif %}>Food and Beverage</option>
+                            <option value="transport" {% if data.Departments == "transport" %}selected{% endif %}>Transport</option>
+                        </select>
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold uppercase text-gray-500">Gender</label>
+                        <select name="Gender" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
+                            <option value="MALE" {% if data.Gender == "MALE" %}selected{% endif %}>MALE</option>
+                            <option value="FEMALE" {% if data.Gender == "FEMALE" %}selected{% endif %}>FEMALE</option>
+                        </select>
+                    </div>
+
+                    <!-- Health & Education -->
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold uppercase text-gray-500">Blood Group</label>
+                        <input type="text" name="Blood_Group" value="{{ data.Blood_Group }}" 
+                               class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold uppercase text-gray-500">Education</label>
+                        <input type="text" name="Education" value="{{ data.Education }}" 
+                               class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
+                    </div>
+
+                    <!-- Guardian -->
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold uppercase text-gray-500">Guardian Name</label>
+                        <input type="text" name="Guardian" value="{{ data.Guardian }}" 
+                               class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold uppercase text-gray-500">Guardian Number</label>
+                        <input type="text" name="Guardian_Number" value="{{ data.Guardian_Number }}" 
+                               class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
+                    </div>
+
+                    <!-- Address & Image -->
+                    <div class="space-y-1 md:col-span-2">
+                        <label class="block text-xs font-bold uppercase text-gray-500">Current Address</label>
+                        <input type="text" name="Address" value="{{ data.Address }}" 
+                               class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
+                    </div>
+
+                    <div class="space-y-1 md:col-span-2">
+                        <label class="block text-xs font-bold uppercase text-gray-500">Profile Image</label>
+                        <div class="mt-2 flex items-center space-x-4">
+                            {% if data.Upload_Image %}
+                            <img src="{{ data.Upload_Image.url }}" class="w-16 h-16 rounded-lg object-cover border border-gray-200" alt="Current image">
+                            {% endif %}
+                            <input type="file" name="Upload_Image" 
+                                   class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 text-sm file:mr-4 file:py-1 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-amber-100 file:text-amber-700 hover:file:bg-amber-200 cursor-pointer">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-8 flex flex-col sm:flex-row gap-4 border-t border-gray-100">
+                    <button type="submit" class="flex-grow bg-emerald-500 hover:bg-emerald-600 text-white font-bold uppercase tracking-widest py-3 rounded-lg text-xs transition-all shadow-sm flex items-center justify-center">
+                        <i class="fa fa-save mr-2"></i> Update Employee
+                    </button>
+                    <button type="reset" class="px-8 border border-gray-200 text-gray-400 hover:bg-gray-50 rounded-lg text-xs font-bold uppercase tracking-widest transition-all">
+                        Reset
+                    </button>
+                    <a href="{% url 'Addemployee' %}" class="px-8 border border-gray-200 text-gray-600 hover:bg-gray-100 rounded-lg text-xs font-bold uppercase tracking-widest transition-all flex items-center justify-center">
+                        Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

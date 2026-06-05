@@ -1,0 +1,112 @@
+{% extends 'admin/AdminAllinclude.html' %}
+{% block title %}Maintenance Management{% endblock %}
+{% block pagecontant %}
+
+<div class="space-y-8">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900 uppercase tracking-tight">Maintenance Tickets</h1>
+            <p class="text-sm text-gray-500 uppercase tracking-widest mt-1">Property Facility Management</p>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- New Ticket Form -->
+        <div class="lg:col-span-4">
+            <div class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
+                <div class="px-6 py-4 border-b border-slate-50 bg-slate-50/50">
+                    <h2 class="font-black text-slate-900 uppercase tracking-tight text-xs">Report New Issue</h2>
+                </div>
+                <div class="p-6">
+                    <form method="POST" action="" class="space-y-4">
+                        {% csrf_token %}
+                        <div class="space-y-1">
+                            <label class="block text-[10px] font-black uppercase text-slate-500">Target Room</label>
+                            <select name="room_id" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2.5 text-sm font-bold outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all" required>
+                                <option value="" disabled selected>Select Room #</option>
+                                {% for room in rooms %}
+                                <option value="{{ room.Id }}">Room {{ room.Room_Number }} ({{ room.Status }})</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="block text-[10px] font-black uppercase text-slate-500">Issue Description</label>
+                            <textarea name="issue" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2.5 text-sm font-bold outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all" rows="3" placeholder="Describe the problem..." required></textarea>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="block text-[10px] font-black uppercase text-slate-500">Priority</label>
+                            <select name="priority" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2.5 text-sm font-bold outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all">
+                                <option value="Low">Low</option>
+                                <option value="Medium" selected>Medium</option>
+                                <option value="High">High</option>
+                                <option value="Emergency">Emergency</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-900 font-black uppercase tracking-widest py-3 rounded-lg text-xs transition-all shadow-sm mt-4">
+                            Submit Ticket
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ticket List -->
+        <div class="lg:col-span-8">
+            <div class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
+                <div class="px-6 py-4 border-b border-slate-50 bg-gray-50/50">
+                    <h2 class="font-black text-slate-900 uppercase tracking-tight text-xs">Active Tickets</h2>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="text-[10px] font-black uppercase tracking-widest text-gray-400 border-b border-gray-50 bg-gray-50/30">
+                                <th class="px-6 py-4">ID</th>
+                                <th class="px-6 py-4">Room #</th>
+                                <th class="px-6 py-4">Issue</th>
+                                <th class="px-6 py-4">Priority</th>
+                                <th class="px-6 py-4">Status</th>
+                                <th class="px-6 py-4">Reported</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-50">
+                            {% if tickets %}
+                            {% for t in tickets %}
+                            <tr class="hover:bg-gray-50/80 transition-colors text-sm">
+                                <td class="px-6 py-4 font-mono text-gray-400">#{{ t.Id }}</td>
+                                <td class="px-6 py-4 font-bold text-slate-900">Room {{ t.Room.Room_Number }}</td>
+                                <td class="px-6 py-4 text-slate-600 truncate max-w-[200px]">{{ t.Issue }}</td>
+                                <td class="px-6 py-4">
+                                    <span class="px-2 py-0.5 rounded text-[10px] font-black uppercase 
+                                        {% if t.Priority == 'Emergency' %}bg-rose-50 text-rose-600
+                                        {% elif t.Priority == 'High' %}bg-orange-50 text-orange-600
+                                        {% elif t.Priority == 'Medium' %}bg-amber-50 text-amber-600
+                                        {% else %}bg-slate-50 text-slate-500{% endif %}">
+                                        {{ t.Priority }}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="text-[10px] font-black uppercase tracking-widest
+                                        {% if t.Status == 'Resolved' %}text-emerald-500
+                                        {% elif t.Status == 'In Progress' %}text-blue-500
+                                        {% else %}text-rose-500{% endif %}">
+                                        {{ t.Status }}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 text-xs text-gray-400">{{ t.Date_Reported }}</td>
+                            </tr>
+                            {% endfor %}
+                            {% else %}
+                            <tr>
+                                <td colspan="6" class="px-6 py-12 text-center text-gray-400 italic">No maintenance tickets found.</td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
