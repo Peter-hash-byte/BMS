@@ -59,15 +59,15 @@
                                             {% if data %}
                                             {% for i in data %}
                                             <tr>
-                                                <td>{{ i.Room_Number }}</td>
-                                                <td>{{ i.Room_Type }}</td>
-                                                <td>{{ i.Room_Floor }}</td>
-                                                <td>{{ i.Room_Facility }}</td>
-                                                <td>{{ i.Room_Price }}</td>
-                                                <td>{{ i.Date }}</td>
+                                                <td>{{ i.room_number }}</td>
+                                                <td>{{ i.room_type }}</td>
+                                                <td>{{ i.floor }}</td>
+                                                <td>{{ i.facility }}</td>
+                                                <td>{{ i.price }}</td>
+                                                <td>{{ i.created_at }}</td>
                                                 <td class="last">
-                                                    <a href="{% url 'AllRooms_Delete' id=i.Id %}" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
-                                                    <a href="{% url 'EditRooms' id=i.Id %}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i></a>
+                                                    <a href="{% url 'AllRooms_Delete' id=i.id %}" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
+                                                    <a href="{% url 'EditRooms' id=i.id %}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i></a>
                                                 </td>
                                             </tr>
                                             {% endfor %}
@@ -83,27 +83,27 @@
                                     <div class="col-md-4 col-sm-4 profile_details">
                                         <div class="well profile_view">
                                             <div class="col-sm-12">
-                                                <h4 class="brief"><i>{{ i.Room_Type }}</i></h4>
+                                                <h4 class="brief"><i>{{ i.room_type }}</i></h4>
                                                 <div class="left col-md-7 col-sm-7">
-                                                    <h2>Room: {{ i.Room_Number }}</h2>
-                                                    <p><strong>Floor: </strong> {{ i.Room_Floor }} </p>
-                                                    <p><strong>Price: </strong> {{ i.Room_Price }} </p>
+                                                    <h2>Room: {{ i.room_number }}</h2>
+                                                    <p><strong>Floor: </strong> {{ i.floor }} </p>
+                                                    <p><strong>Price: </strong> {{ i.price }} </p>
                                                     <ul class="list-unstyled">
-                                                        <li><i class="fa fa-info-circle"></i> Facility: {{ i.Room_Facility }}</li>
+                                                        <li><i class="fa fa-info-circle"></i> Facility: {{ i.facility }}</li>
                                                     </ul>
                                                 </div>
                                                 <div class="right col-md-5 col-sm-5 text-center">
-                                                    {% if i.Room_Image %}
-                                                    <img src="{{ i.Room_Image.url }}" alt="" class="img-fluid">
+                                                    {% if i.image %}
+                                                    <img src="{{ i.image.url }}" alt="" class="img-fluid">
                                                     {% endif %}
                                                 </div>
                                             </div>
                                             <div class=" profile-bottom text-center">
                                                 <div class=" col-sm-6 pull-right">
-                                                    <a href="{% url 'EditRooms' id=i.Id %}" class="btn btn-primary btn-sm">
+                                                    <a href="{% url 'EditRooms' id=i.id %}" class="btn btn-primary btn-sm">
                                                         <i class="fa fa-pencil"> </i> Edit
                                                     </a>
-                                                    <a href="{% url 'AllRooms_Delete' id=i.Id %}" class="btn btn-danger btn-sm">
+                                                    <a href="{% url 'AllRooms_Delete' id=i.id %}" class="btn btn-danger btn-sm">
                                                         <i class="fa fa-trash"> </i> Delete
                                                     </a>
                                                 </div>

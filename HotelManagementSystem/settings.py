@@ -90,6 +90,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / os.getenv('DATABASE_NAME', 'db.sqlite3'),
+        'OPTIONS': {
+            'timeout': 20,
+        }
     }
 }
 
@@ -142,5 +145,10 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
+
+AUTH_USER_MODEL = 'HotelApp.CustomUser'
+
+LOGIN_REDIRECT_URL = 'Adminpage'
+LOGIN_URL = 'Author_login'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

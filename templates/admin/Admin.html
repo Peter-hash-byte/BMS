@@ -88,45 +88,45 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-50">
-                            {% if data %}
-                            {% for i in data %}
+                            {% if recent_online %}
+                            {% for i in recent_online %}
                             <tr class="hover:bg-gray-50 transition-colors group">
                                 <td class="px-6 py-4">
                                     <div class="flex items-center space-x-3">
                                         <div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-500">
-                                            {{ i.Name|slice:":1" }}{{ i.Surname|slice:":1" }}
+                                            {{ i.first_name|slice:":1" }}{{ i.last_name|slice:":1" }}
                                         </div>
                                         <div>
-                                            <p class="text-sm font-bold text-gray-900">{{ i.Name }} {{ i.Surname }}</p>
-                                            <p class="text-xs text-gray-400">{{ i.Email }}</p>
+                                            <p class="text-sm font-bold text-gray-900">{{ i.first_name }} {{ i.last_name }}</p>
+                                            <p class="text-xs text-gray-400">{{ i.email }}</p>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 text-xs font-medium text-gray-600">
                                     <div class="flex items-center space-x-2">
-                                        <span>{{ i.Check_in }}</span>
+                                        <span>{{ i.check_in }}</span>
                                         <i class="fa fa-long-arrow-right text-gray-300"></i>
-                                        <span>{{ i.Check_out }}</span>
+                                        <span>{{ i.check_out }}</span>
                                     </div>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">{{ i.City }}</span>
+                                    <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">{{ i.city }}</span>
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="flex items-center space-x-3">
-                                        <a href="{% url 'Billing' type='online' id=i.Id %}" class="bg-slate-50 hover:bg-slate-100 text-slate-600 px-3 py-1 rounded text-[10px] font-black uppercase tracking-widest border border-slate-200 shadow-sm transition-all flex items-center">
+                                        <a href="{% url 'Billing' type='online' id=i.id %}" class="bg-slate-50 hover:bg-slate-100 text-slate-600 px-3 py-1 rounded text-[10px] font-black uppercase tracking-widest border border-slate-200 shadow-sm transition-all flex items-center">
                                             <i class="fa fa-money mr-1.5 text-amber-500"></i> Bill
                                         </a>
 
-                                        {% if i.Status == 'Reserved' %}
-                                        <a href="{% url 'CheckIn' type='online' id=i.Id %}" class="bg-emerald-500 hover:bg-emerald-600 text-white px-3 py-1 rounded text-[10px] font-black uppercase tracking-widest shadow-sm transition-all">Check In</a>
-                                        {% elif i.Status == 'Checked In' %}
-                                        <a href="{% url 'CheckOut' type='online' id=i.Id %}" class="bg-rose-500 hover:bg-rose-600 text-white px-3 py-1 rounded text-[10px] font-black uppercase tracking-widest shadow-sm transition-all">Check Out</a>
+                                        {% if i.status == 'Reserved' %}
+                                        <a href="{% url 'CheckIn' type='online' id=i.id %}" class="bg-emerald-500 hover:bg-emerald-600 text-white px-3 py-1 rounded text-[10px] font-black uppercase tracking-widest shadow-sm transition-all">Check In</a>
+                                        {% elif i.status == 'Checked In' %}
+                                        <a href="{% url 'CheckOut' type='online' id=i.id %}" class="bg-rose-500 hover:bg-rose-600 text-white px-3 py-1 rounded text-[10px] font-black uppercase tracking-widest shadow-sm transition-all">Check Out</a>
                                         {% else %}
-                                        <span class="text-gray-400 text-[10px] font-black uppercase tracking-widest italic">{{ i.Status }}</span>
+                                        <span class="text-gray-400 text-[10px] font-black uppercase tracking-widest italic">{{ i.status }}</span>
                                         {% endif %}
                                         
-                                        <a href="{% url 'Edit_online_Booking' id=i.Id %}" class="text-blue-500 hover:text-blue-700 transition-colors ml-2">
+                                        <a href="{% url 'Edit_online_Booking' id=i.id %}" class="text-blue-500 hover:text-blue-700 transition-colors ml-2">
                                             <i class="fa fa-pencil"></i>
                                         </a>
                                     </div>
@@ -166,28 +166,28 @@
                             {% for i in recent_offline %}
                             <tr class="hover:bg-gray-50 transition-colors group text-xs">
                                 <td class="px-6 py-4">
-                                    <p class="font-bold text-gray-900">{{ i.First_Name }} {{ i.Last_Name }}</p>
-                                    <p class="text-[10px] text-gray-400">{{ i.Email }}</p>
+                                    <p class="font-bold text-gray-900">{{ i.first_name }} {{ i.last_name }}</p>
+                                    <p class="text-[10px] text-gray-400">{{ i.email }}</p>
                                 </td>
-                                <td class="px-6 py-4 font-bold text-slate-500">#{{ i.Room_Number }}</td>
+                                <td class="px-6 py-4 font-bold text-slate-500">#{{ i.room.room_number }}</td>
                                 <td class="px-6 py-4 text-xs font-medium">
-                                    {% if i.Status == 'Checked In' %}
+                                    {% if i.status == 'Checked In' %}
                                     <span class="text-emerald-500 font-black">IN</span>
-                                    {% elif i.Status == 'Checked Out' %}
+                                    {% elif i.status == 'Checked Out' %}
                                     <span class="text-rose-500 font-black">OUT</span>
                                     {% else %}
-                                    <span class="text-gray-400 italic">{{ i.Status }}</span>
+                                    <span class="text-gray-400 italic">{{ i.status }}</span>
                                     {% endif %}
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="flex items-center space-x-2">
-                                        <a href="{% url 'Billing' type='offline' id=i.Customer_Id %}" class="bg-slate-50 hover:bg-slate-100 text-slate-600 px-3 py-1 rounded text-[10px] font-black uppercase tracking-widest border border-slate-200 shadow-sm transition-all flex items-center">
+                                        <a href="{% url 'Billing' type='offline' id=i.id %}" class="bg-slate-50 hover:bg-slate-100 text-slate-600 px-3 py-1 rounded text-[10px] font-black uppercase tracking-widest border border-slate-200 shadow-sm transition-all flex items-center">
                                             <i class="fa fa-money mr-1.5 text-amber-500"></i> Bill
                                         </a>
-                                        {% if i.Status == 'Reserved' %}
-                                        <a href="{% url 'CheckIn' type='offline' id=i.Customer_Id %}" class="bg-emerald-500 hover:bg-emerald-600 text-white px-3 py-1 rounded text-[10px] font-black uppercase tracking-widest shadow-sm transition-all">Check In</a>
-                                        {% elif i.Status == 'Checked In' %}
-                                        <a href="{% url 'CheckOut' type='offline' id=i.Customer_Id %}" class="bg-rose-500 hover:bg-rose-600 text-white px-3 py-1 rounded text-[10px] font-black uppercase tracking-widest shadow-sm transition-all">Check Out</a>
+                                        {% if i.status == 'Reserved' %}
+                                        <a href="{% url 'CheckIn' type='offline' id=i.id %}" class="bg-emerald-500 hover:bg-emerald-600 text-white px-3 py-1 rounded text-[10px] font-black uppercase tracking-widest shadow-sm transition-all">Check In</a>
+                                        {% elif i.status == 'Checked In' %}
+                                        <a href="{% url 'CheckOut' type='offline' id=i.id %}" class="bg-rose-500 hover:bg-rose-600 text-white px-3 py-1 rounded text-[10px] font-black uppercase tracking-widest shadow-sm transition-all">Check Out</a>
                                         {% endif %}
                                     </div>
                                 </td>

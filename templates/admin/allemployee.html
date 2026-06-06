@@ -57,30 +57,30 @@
                         {% if data %}
                         {% for i in data %}
                         <tr class="hover:bg-gray-50/80 transition-colors group text-sm">
-                            <td class="px-6 py-4 font-mono font-medium text-gray-400">#{{ i.Employee_Id }}</td>
+                            <td class="px-6 py-4 font-mono font-medium text-gray-400">#{{ i.employee_id }}</td>
                             <td class="px-6 py-4">
                                 <div class="flex items-center space-x-3">
                                     <div class="w-8 h-8 rounded-full bg-emerald-50 flex items-center justify-center text-xs font-black text-emerald-600">
-                                        {{ i.First_Name|slice:":1" }}{{ i.Last_Name|slice:":1" }}
+                                        {{ i.first_name|slice:":1" }}{{ i.last_name|slice:":1" }}
                                     </div>
                                     <div>
-                                        <p class="font-bold text-gray-900">{{ i.First_Name }} {{ i.Last_Name }}</p>
-                                        <p class="text-[10px] text-gray-400 uppercase tracking-tighter mt-0.5">{{ i.Email }}</p>
+                                        <p class="font-bold text-gray-900">{{ i.first_name }} {{ i.last_name }}</p>
+                                        <p class="text-[10px] text-gray-400 uppercase tracking-tighter mt-0.5">{{ i.email }}</p>
                                     </div>
                                 </div>
                             </td>
                             <td class="px-6 py-4">
                                 <span class="px-2 py-1 rounded bg-blue-50 text-blue-600 text-[10px] font-black uppercase tracking-widest">
-                                    {{ i.Departments }}
+                                    {{ i.department }}
                                 </span>
                             </td>
-                            <td class="px-6 py-4 text-gray-500 font-medium">{{ i.Joining_Date }}</td>
+                            <td class="px-6 py-4 text-gray-500 font-medium">{{ i.joining_date }}</td>
                             <td class="px-6 py-4 text-right">
                                 <div class="flex items-center justify-end space-x-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <a href="{% url 'Editemployee' id=i.Employee_Id %}" class="w-8 h-8 rounded bg-blue-50 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all">
+                                    <a href="{% url 'Editemployee' id=i.employee_id %}" class="w-8 h-8 rounded bg-blue-50 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all">
                                         <i class="fa fa-pencil text-xs"></i>
                                     </a>
-                                    <a href="{% url 'AllEmployee_Delete' id=i.Employee_Id %}" 
+                                    <a href="{% url 'AllEmployee_Delete' id=i.employee_id %}" 
                                        class="w-8 h-8 rounded bg-rose-50 text-rose-600 flex items-center justify-center hover:bg-rose-600 hover:text-white transition-all"
                                        onclick="return confirm('Delete staff record?')">
                                         <i class="fa fa-trash text-xs"></i>
@@ -106,33 +106,33 @@
                     <div class="bg-white border border-gray-100 rounded-xl overflow-hidden group hover:shadow-md transition-shadow">
                         <div class="p-6 text-center space-y-4">
                             <div class="relative inline-block">
-                                {% if i.Upload_Image %}
-                                <img src="{{ i.Upload_Image.url }}" class="w-20 h-20 rounded-full object-cover border-4 border-emerald-50 mx-auto" alt="staff">
+                                {% if i.image %}
+                                <img src="{{ i.image.url }}" class="w-20 h-20 rounded-full object-cover border-4 border-emerald-50 mx-auto" alt="staff">
                                 {% else %}
                                 <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-auto text-xl font-black text-gray-300 uppercase">
-                                    {{ i.First_Name|slice:":1" }}{{ i.Last_Name|slice:":1" }}
+                                    {{ i.first_name|slice:":1" }}{{ i.last_name|slice:":1" }}
                                 </div>
                                 {% endif %}
                             </div>
                             <div>
-                                <h4 class="font-black text-gray-900 uppercase tracking-tight">{{ i.First_Name }} {{ i.Last_Name }}</h4>
-                                <p class="text-[10px] font-bold text-blue-600 uppercase tracking-[0.2em] mt-1">{{ i.Departments }}</p>
+                                <h4 class="font-black text-gray-900 uppercase tracking-tight">{{ i.first_name }} {{ i.last_name }}</h4>
+                                <p class="text-[10px] font-bold text-blue-600 uppercase tracking-[0.2em] mt-1">{{ i.department }}</p>
                             </div>
                             <div class="pt-4 grid grid-cols-1 gap-2 border-t border-gray-50">
                                 <div class="flex items-center justify-center space-x-2 text-xs text-gray-500">
                                     <i class="fa fa-envelope text-gray-300"></i>
-                                    <span>{{ i.Email }}</span>
+                                    <span>{{ i.email }}</span>
                                 </div>
                                 <div class="flex items-center justify-center space-x-2 text-xs text-gray-500">
                                     <i class="fa fa-phone text-gray-300"></i>
-                                    <span>{{ i.Mobile_Number }}</span>
+                                    <span>{{ i.phone_number }}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="px-6 py-4 bg-gray-50 flex items-center justify-around opacity-60 group-hover:opacity-100 transition-opacity">
-                            <a href="{% url 'Editemployee' id=i.Employee_Id %}" class="text-xs font-black uppercase tracking-widest text-blue-600 hover:text-blue-800 transition-colors">Edit</a>
+                            <a href="{% url 'Editemployee' id=i.employee_id %}" class="text-xs font-black uppercase tracking-widest text-blue-600 hover:text-blue-800 transition-colors">Edit</a>
                             <div class="w-px h-4 bg-gray-200"></div>
-                            <a href="{% url 'AllEmployee_Delete' id=i.Employee_Id %}" class="text-xs font-black uppercase tracking-widest text-rose-600 hover:text-rose-800 transition-colors">Delete</a>
+                            <a href="{% url 'AllEmployee_Delete' id=i.employee_id %}" class="text-xs font-black uppercase tracking-widest text-rose-600 hover:text-rose-800 transition-colors">Delete</a>
                         </div>
                     </div>
                     {% endfor %}

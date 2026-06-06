@@ -34,22 +34,22 @@
                         {% if rooms %}
                         {% for room in rooms %}
                         <div class="group border border-slate-100 rounded-2xl overflow-hidden hover:border-amber-200 transition-all duration-300 bg-white">
-                            {% if room.Room_Image %}
+                            {% if room.image %}
                             <div class="h-48 overflow-hidden relative">
-                                <img src="{{ room.Room_Image.url }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="{{ room.Room_Type }}">
+                                <img src="{{ room.image.url }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="{{ room.room_type }}">
                                 <div class="absolute top-4 right-4 bg-amber-500 text-slate-900 px-3 py-1 rounded-full font-black text-sm shadow-lg">
-                                    ${{ room.Room_Price }}
+                                    ${{ room.price }}
                                 </div>
                             </div>
                             {% endif %}
                             <div class="p-6 space-y-4">
-                                <h4 class="font-bold text-lg text-slate-900 leading-tight uppercase tracking-wide">{{ room.Room_Type }}</h4>
+                                <h4 class="font-bold text-lg text-slate-900 leading-tight uppercase tracking-wide">{{ room.room_type }}</h4>
                                 <div class="flex flex-wrap gap-4 text-[10px] text-slate-400 font-black uppercase">
-                                    <span class="flex items-center"><i class="fas fa-hashtag mr-2 text-amber-500"></i>Room {{ room.Room_Number }}</span>
-                                    <span class="flex items-center"><i class="fas fa-layer-group mr-2 text-amber-500"></i>Floor {{ room.Room_Floor }}</span>
+                                    <span class="flex items-center"><i class="fas fa-hashtag mr-2 text-amber-500"></i>Room {{ room.room_number }}</span>
+                                    <span class="flex items-center"><i class="fas fa-layer-group mr-2 text-amber-500"></i>Floor {{ room.floor }}</span>
                                 </div>
                                 <p class="text-sm text-slate-500 italic leading-relaxed bg-slate-50 p-3 rounded-lg border-l-4 border-amber-500">
-                                    {{ room.Room_Facility }}
+                                    {{ room.facility }}
                                 </p>
                             </div>
                         </div>
@@ -118,21 +118,21 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 <div class="space-y-2">
                                     <label class="block text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">Check-In Date <span class="text-rose-500">*</span></label>
-                                    <input type="date" name="Check_in" value="{{ initial_data.Check_in }}" 
+                                    <input type="date" name="check_in" value="{{ initial_data.check_in }}" 
                                            class="w-full bg-slate-50 border-2 border-slate-100 rounded-xl px-5 py-4 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 outline-none transition-all text-sm font-bold" required>
                                 </div>
                                 <div class="space-y-2">
                                     <label class="block text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">Check-Out Date <span class="text-rose-500">*</span></label>
-                                    <input type="date" name="Check_out" value="{{ initial_data.Check_out }}"
+                                    <input type="date" name="check_out" value="{{ initial_data.check_out }}"
                                            class="w-full bg-slate-50 border-2 border-slate-100 rounded-xl px-5 py-4 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 outline-none transition-all text-sm font-bold" required>
                                 </div>
                                 <div class="md:col-span-2 space-y-2">
                                     <label class="block text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">Select Your Room <span class="text-rose-500">*</span></label>
                                     <div class="relative">
-                                        <select name="Room_No" class="w-full bg-slate-50 border-2 border-slate-100 rounded-xl px-5 py-4 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 outline-none transition-all appearance-none cursor-pointer text-sm font-bold" required>
+                                        <select name="room" class="w-full bg-slate-50 border-2 border-slate-100 rounded-xl px-5 py-4 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 outline-none transition-all appearance-none cursor-pointer text-sm font-bold" required>
                                             <option value="" disabled selected>Choose from Inventory...</option>
                                             {% for room in rooms %}
-                                            <option value="{{ room.Room_Number }}">{{ room.Room_Type }} - #{{ room.Room_Number }} (${{ room.Room_Price }}/night)</option>
+                                            <option value="{{ room.id }}">{{ room.room_type }} - #{{ room.room_number }} (${{ room.price }}/night)</option>
                                             {% endfor %}
                                         </select>
                                         <i class="fas fa-chevron-down absolute right-5 top-1/2 -translate-y-1/2 text-slate-300 pointer-events-none"></i>
@@ -140,19 +140,19 @@
                                 </div>
                                 <div class="space-y-2">
                                     <label class="block text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">Adults</label>
-                                    <select name="ADULT" class="w-full bg-slate-50 border-2 border-slate-100 rounded-xl px-5 py-4 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 outline-none transition-all appearance-none cursor-pointer text-sm font-bold">
-                                        <option value="1 ADULT" {% if initial_data.ADULT == '1 ADULT' %}selected{% endif %}>1 Guest</option>
-                                        <option value="2 ADULT" {% if initial_data.ADULT == '2 ADULT' %}selected{% endif %}>2 Guests</option>
-                                        <option value="3 ADULT" {% if initial_data.ADULT == '3 ADULT' %}selected{% endif %}>3 Guests</option>
-                                        <option value="4 ADULT" {% if initial_data.ADULT == '4 ADULT' %}selected{% endif %}>4+ Guests</option>
+                                    <select name="adults" class="w-full bg-slate-50 border-2 border-slate-100 rounded-xl px-5 py-4 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 outline-none transition-all appearance-none cursor-pointer text-sm font-bold">
+                                        <option value="1" {% if initial_data.adults == '1' %}selected{% endif %}>1 Guest</option>
+                                        <option value="2" {% if initial_data.adults == '2' %}selected{% endif %}>2 Guests</option>
+                                        <option value="3" {% if initial_data.adults == '3' %}selected{% endif %}>3 Guests</option>
+                                        <option value="4" {% if initial_data.adults == '4' %}selected{% endif %}>4+ Guests</option>
                                     </select>
                                 </div>
                                 <div class="space-y-2">
                                     <label class="block text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">Children</label>
-                                    <select name="CHILDREN" class="w-full bg-slate-50 border-2 border-slate-100 rounded-xl px-5 py-4 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 outline-none transition-all appearance-none cursor-pointer text-sm font-bold">
-                                        <option value="0 CHILDREN" {% if initial_data.CHILDREN == '0 CHILDREN' %}selected{% endif %}>No Children</option>
-                                        <option value="1 CHILDREN" {% if initial_data.CHILDREN == '1 CHILDREN' %}selected{% endif %}>1 Child</option>
-                                        <option value="2 CHILDREN" {% if initial_data.CHILDREN == '2 CHILDREN' %}selected{% endif %}>2 Children</option>
+                                    <select name="children" class="w-full bg-slate-50 border-2 border-slate-100 rounded-xl px-5 py-4 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 outline-none transition-all appearance-none cursor-pointer text-sm font-bold">
+                                        <option value="0" {% if initial_data.children == '0' %}selected{% endif %}>No Children</option>
+                                        <option value="1" {% if initial_data.children == '1' %}selected{% endif %}>1 Child</option>
+                                        <option value="2" {% if initial_data.children == '2' %}selected{% endif %}>2 Children</option>
                                     </select>
                                 </div>
                             </div>
@@ -167,22 +167,22 @@
                             </div>
                             
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                <input type="text" name="Name" placeholder="First Name *" class="w-full bg-slate-50 border-2 border-slate-100 rounded-xl px-5 py-4 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 outline-none transition-all text-sm font-bold" required>
-                                <input type="text" name="Surname" placeholder="Last Name *" class="w-full bg-slate-50 border-2 border-slate-100 rounded-xl px-5 py-4 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 outline-none transition-all text-sm font-bold" required>
-                                <input type="email" name="Email" placeholder="Email Address *" class="w-full bg-slate-50 border-2 border-slate-100 rounded-xl px-5 py-4 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 outline-none transition-all text-sm font-bold" required>
-                                <input type="tel" name="Phone_Number" placeholder="Phone Number *" class="w-full bg-slate-50 border-2 border-slate-100 rounded-xl px-5 py-4 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 outline-none transition-all text-sm font-bold" required>
-                                <input type="text" name="City" placeholder="City *" class="w-full bg-slate-50 border-2 border-slate-100 rounded-xl px-5 py-4 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 outline-none transition-all text-sm font-bold" required>
-                                <input type="text" name="Country" placeholder="Country *" class="w-full bg-slate-50 border-2 border-slate-100 rounded-xl px-5 py-4 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 outline-none transition-all text-sm font-bold" required>
+                                <input type="text" name="first_name" placeholder="First Name *" class="w-full bg-slate-50 border-2 border-slate-100 rounded-xl px-5 py-4 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 outline-none transition-all text-sm font-bold" required>
+                                <input type="text" name="last_name" placeholder="Last Name *" class="w-full bg-slate-50 border-2 border-slate-100 rounded-xl px-5 py-4 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 outline-none transition-all text-sm font-bold" required>
+                                <input type="email" name="email" placeholder="Email Address *" class="w-full bg-slate-50 border-2 border-slate-100 rounded-xl px-5 py-4 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 outline-none transition-all text-sm font-bold" required>
+                                <input type="tel" name="phone_number" placeholder="Phone Number *" class="w-full bg-slate-50 border-2 border-slate-100 rounded-xl px-5 py-4 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 outline-none transition-all text-sm font-bold" required>
+                                <input type="text" name="city" placeholder="City *" class="w-full bg-slate-50 border-2 border-slate-100 rounded-xl px-5 py-4 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 outline-none transition-all text-sm font-bold" required>
+                                <input type="text" name="country" placeholder="Country *" class="w-full bg-slate-50 border-2 border-slate-100 rounded-xl px-5 py-4 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 outline-none transition-all text-sm font-bold" required>
                                 
                                 <div class="md:col-span-2 space-y-2">
                                     <label class="block text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">Identity Number (NID/Passport) <span class="text-rose-500">*</span></label>
-                                    <input type="text" name="Nid_No" pattern="[0-9]*" inputmode="numeric" placeholder="Numbers only (e.g. 12345678)" 
+                                    <input type="text" name="id_number" pattern="[0-9]*" inputmode="numeric" placeholder="Numbers only (e.g. 12345678)" 
                                            class="w-full bg-slate-50 border-2 border-slate-100 rounded-xl px-5 py-4 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 outline-none transition-all text-sm font-bold" required>
                                 </div>
 
                                 <div class="md:col-span-2 space-y-2">
                                     <label class="block text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">Home Address</label>
-                                    <textarea name="Address" placeholder="Enter your full street address..." rows="3" 
+                                    <textarea name="address" placeholder="Enter your full street address..." rows="3" 
                                               class="w-full bg-slate-50 border-2 border-slate-100 rounded-xl px-5 py-4 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 outline-none transition-all text-sm font-bold"></textarea>
                                 </div>
                             </div>

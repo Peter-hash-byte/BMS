@@ -1,27 +1,39 @@
 from django import forms
 from .import models
 
-class Online_Booking_form(forms.ModelForm):
+class OnlineBookingForm(forms.ModelForm):
     class Meta:
-        model = models.Online_Booking
+        model = models.OnlineBooking
         fields = "__all__"
+        widgets = {
+            'check_in': forms.DateInput(attrs={'type': 'date'}),
+            'check_out': forms.DateInput(attrs={'type': 'date'}),
+        }
 
-class offline_Booking_form(forms.ModelForm):
+class OfflineBookingForm(forms.ModelForm):
     class Meta:
-        model = models.Offline_Booking
+        model = models.OfflineBooking
         fields = "__all__"
-class Add_Employee_form(forms.ModelForm):
-    class Meta:
-        model = models.Add_Employee
-        fields = "__all__"
+        widgets = {
+            'check_in': forms.DateInput(attrs={'type': 'date'}),
+            'check_out': forms.DateInput(attrs={'type': 'date'}),
+        }
 
-class Add_Room_form(forms.ModelForm):
+class EmployeeForm(forms.ModelForm):
     class Meta:
-        model = models.Add_Room
+        model = models.Employee
+        fields = "__all__"
+        widgets = {
+            'joining_date': forms.DateInput(attrs={'type': 'date'}),
+            'date_of_birth': forms.DateInput(attrs={'type': 'date'}),
+        }
+
+class RoomForm(forms.ModelForm):
+    class Meta:
+        model = models.Room
         fields = "__all__"
 
 class EmployeeSalaryForm(forms.ModelForm):
     class Meta:
         model = models.EmployeeSalary
         fields = "__all__"
-

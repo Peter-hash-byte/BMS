@@ -21,7 +21,7 @@
     <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
         <div class="px-6 py-4 border-b border-gray-50 bg-gray-50/50">
             <h2 class="font-bold text-gray-900 uppercase tracking-tight text-sm flex items-center">
-                <i class="fa fa-globe mr-2 text-amber-500"></i> Reservation: {{ data.Name }} {{ data.Surname }}
+                <i class="fa fa-globe mr-2 text-amber-500"></i> Reservation: {{ data.first_name }} {{ data.last_name }}
             </h2>
         </div>
         <div class="p-8">
@@ -32,106 +32,93 @@
                     <!-- ID & NID -->
                     <div class="space-y-1">
                         <label class="block text-xs font-bold uppercase text-gray-500">Booking ID</label>
-                        <input type="text" name="Id" value="{{ data.Id }}" readonly 
+                        <input type="text" name="id" value="{{ data.id }}" readonly 
                                class="w-full bg-gray-100 border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-500 cursor-not-allowed outline-none">
                     </div>
 
                     <div class="space-y-1">
                         <label class="block text-xs font-bold uppercase text-gray-500">NID / Identity Number</label>
-                        <input type="text" name="Nid_No" value="{{ data.Nid_No }}" 
+                        <input type="text" name="id_number" value="{{ data.id_number }}" 
                                class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
                     </div>
 
                     <!-- Stay Dates -->
                     <div class="space-y-1">
                         <label class="block text-xs font-bold uppercase text-gray-500">Check In Date</label>
-                        <input type="date" name="Check_in" value="{{ data.Check_in }}" 
+                        <input type="date" name="check_in" value="{{ data.check_in|date:'Y-m-d' }}" 
                                class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
                     </div>
 
                     <div class="space-y-1">
                         <label class="block text-xs font-bold uppercase text-gray-500">Check Out Date</label>
-                        <input type="date" name="Check_out" value="{{ data.Check_out }}" 
+                        <input type="date" name="check_out" value="{{ data.check_out|date:'Y-m-d' }}" 
                                class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
                     </div>
 
                     <!-- Occupancy -->
                     <div class="space-y-1">
                         <label class="block text-xs font-bold uppercase text-gray-500">Adults</label>
-                        <select name="ADULT" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
-                            <option value="ADULT" {% if data.ADULT == "ADULT" %}selected{% endif %}>ADULT</option>
-                            <option value="1 ADULT" {% if data.ADULT == "1 ADULT" %}selected{% endif %}>1 ADULT</option>
-                            <option value="2 ADULT" {% if data.ADULT == "2 ADULT" %}selected{% endif %}>2 ADULT</option>
-                            <option value="3 ADULT" {% if data.ADULT == "3 ADULT" %}selected{% endif %}>3 ADULT</option>
-                            <option value="4 ADULT" {% if data.ADULT == "4 ADULT" %}selected{% endif %}>4 ADULT</option>
+                        <select name="adults" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
+                            <option value="1" {% if data.adults == 1 %}selected{% endif %}>1 Adult</option>
+                            <option value="2" {% if data.adults == 2 %}selected{% endif %}>2 Adults</option>
+                            <option value="3" {% if data.adults == 3 %}selected{% endif %}>3 Adults</option>
+                            <option value="4" {% if data.adults == 4 %}selected{% endif %}>4 Adults</option>
                         </select>
                     </div>
 
                     <div class="space-y-1">
                         <label class="block text-xs font-bold uppercase text-gray-500">Children</label>
-                        <select name="CHILDREN" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
-                            <option value="CHILDREN" {% if data.CHILDREN == "CHILDREN" %}selected{% endif %}>CHILDREN</option>
-                            <option value="1 CHILDREN" {% if data.CHILDREN == "1 CHILDREN" %}selected{% endif %}>1 CHILDREN</option>
-                            <option value="2 CHILDREN" {% if data.CHILDREN == "2 CHILDREN" %}selected{% endif %}>2 CHILDREN</option>
-                            <option value="3 CHILDREN" {% if data.CHILDREN == "3 CHILDREN" %}selected{% endif %}>3 CHILDREN</option>
-                            <option value="4 CHILDREN" {% if data.CHILDREN == "4 CHILDREN" %}selected{% endif %}>4 CHILDREN</option>
+                        <select name="children" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
+                            <option value="0" {% if data.children == 0 %}selected{% endif %}>0 Children</option>
+                            <option value="1" {% if data.children == 1 %}selected{% endif %}>1 Child</option>
+                            <option value="2" {% if data.children == 2 %}selected{% endif %}>2 Children</option>
+                            <option value="3" {% if data.children == 3 %}selected{% endif %}>3 Children</option>
+                            <option value="4" {% if data.children == 4 %}selected{% endif %}>4 Children</option>
                         </select>
                     </div>
 
                     <!-- Guest Details -->
                     <div class="space-y-1">
                         <label class="block text-xs font-bold uppercase text-gray-500">First Name</label>
-                        <input type="text" name="Name" value="{{ data.Name }}" 
+                        <input type="text" name="first_name" value="{{ data.first_name }}" 
                                class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
                     </div>
 
                     <div class="space-y-1">
                         <label class="block text-xs font-bold uppercase text-gray-500">Last Name</label>
-                        <input type="text" name="Surname" value="{{ data.Surname }}" 
+                        <input type="text" name="last_name" value="{{ data.last_name }}" 
                                class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
                     </div>
 
                     <div class="space-y-1">
                         <label class="block text-xs font-bold uppercase text-gray-500">Email Address</label>
-                        <input type="email" name="Email" value="{{ data.Email }}" 
+                        <input type="email" name="email" value="{{ data.email }}" 
                                class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
                     </div>
 
                     <div class="space-y-1">
                         <label class="block text-xs font-bold uppercase text-gray-500">Phone Number</label>
-                        <input type="text" name="Phone_Number" value="{{ data.Phone_Number }}" 
+                        <input type="text" name="phone_number" value="{{ data.phone_number }}" 
                                class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
                     </div>
 
                     <!-- Location -->
                     <div class="space-y-1">
                         <label class="block text-xs font-bold uppercase text-gray-500">City</label>
-                        <input type="text" name="City" value="{{ data.City }}" 
+                        <input type="text" name="city" value="{{ data.city }}" 
                                class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
                     </div>
 
                     <div class="space-y-1">
                         <label class="block text-xs font-bold uppercase text-gray-500">Country</label>
-                        <input type="text" name="Country" value="{{ data.Country }}" 
+                        <input type="text" name="country" value="{{ data.country }}" 
                                class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
                     </div>
 
                     <div class="space-y-1 md:col-span-2">
                         <label class="block text-xs font-bold uppercase text-gray-500">Full Address</label>
-                        <input type="text" name="Address" value="{{ data.Address }}" 
+                        <input type="text" name="address" value="{{ data.address }}" 
                                class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
-                    </div>
-
-                    <!-- Image -->
-                    <div class="space-y-1 md:col-span-2">
-                        <label class="block text-xs font-bold uppercase text-gray-500">Identity Image</label>
-                        <div class="mt-2 flex items-center space-x-4">
-                            {% if data.Img %}
-                            <img src="{{ data.Img.url }}" class="w-16 h-16 rounded-lg object-cover border border-gray-200" alt="Current image">
-                            {% endif %}
-                            <input type="file" name="Img" 
-                                   class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 text-sm file:mr-4 file:py-1 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-amber-100 file:text-amber-700 hover:file:bg-amber-200 cursor-pointer">
-                        </div>
                     </div>
                 </div>
 

@@ -55,38 +55,38 @@
                         {% if data %}
                         {% for i in data %}
                         <tr class="hover:bg-gray-50/80 transition-colors group">
-                            <td class="px-6 py-4 text-xs font-bold text-gray-400">#{{ i.Id }}</td>
+                            <td class="px-6 py-4 text-xs font-bold text-gray-400">#{{ i.id }}</td>
                             <td class="px-6 py-4">
                                 <div class="flex items-center space-x-3">
                                     <div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-xs font-black text-blue-600">
-                                        {{ i.Name|slice:":1" }}{{ i.Surname|slice:":1" }}
+                                        {{ i.first_name|slice:":1" }}{{ i.last_name|slice:":1" }}
                                     </div>
                                     <div>
-                                        <p class="text-sm font-bold text-gray-900 leading-none">{{ i.Name }} {{ i.Surname }}</p>
-                                        <p class="text-[10px] text-gray-400 uppercase tracking-tighter mt-1">{{ i.Email }}</p>
+                                        <p class="text-sm font-bold text-gray-900 leading-none">{{ i.first_name }} {{ i.last_name }}</p>
+                                        <p class="text-[10px] text-gray-400 uppercase tracking-tighter mt-1">{{ i.email }}</p>
                                     </div>
                                 </div>
                             </td>
                             <td class="px-6 py-4">
                                 <div class="flex flex-col text-xs font-medium text-gray-600">
-                                    <span class="text-[10px] text-gray-400 uppercase font-black">In: {{ i.Check_in }}</span>
-                                    <span class="text-[10px] text-gray-400 uppercase font-black">Out: {{ i.Check_out }}</span>
+                                    <span class="text-[10px] text-gray-400 uppercase font-black">In: {{ i.check_in }}</span>
+                                    <span class="text-[10px] text-gray-400 uppercase font-black">Out: {{ i.check_out }}</span>
                                 </div>
                             </td>
                             <td class="px-6 py-4">
-                                <p class="text-xs text-gray-600 font-medium">{{ i.Phone_Number }}</p>
+                                <p class="text-xs text-gray-600 font-medium">{{ i.phone_number }}</p>
                             </td>
                             <td class="px-6 py-4">
                                 <span class="px-2.5 py-1 rounded bg-gray-100 text-gray-600 text-[10px] font-black uppercase tracking-widest">
-                                    {{ i.City }}, {{ i.Country }}
+                                    {{ i.city }}, {{ i.country }}
                                 </span>
                             </td>
                             <td class="px-6 py-4 text-right">
                                 <div class="flex items-center justify-end space-x-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <a href="{% url 'Edit_online_Booking' id=i.Id %}" class="w-8 h-8 rounded bg-blue-50 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all">
+                                    <a href="{% url 'Edit_online_Booking' id=i.id %}" class="w-8 h-8 rounded bg-blue-50 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all">
                                         <i class="fa fa-pencil text-xs"></i>
                                     </a>
-                                    <a href="{% url 'delete' id=i.Id %}" 
+                                    <a href="{% url 'delete' id=i.id %}" 
                                        class="w-8 h-8 rounded bg-rose-50 text-rose-600 flex items-center justify-center hover:bg-rose-600 hover:text-white transition-all"
                                        onclick="return confirm('Delete this online booking record?')">
                                         <i class="fa fa-trash text-xs"></i>
@@ -113,41 +113,37 @@
                         <div class="p-6 space-y-4">
                             <div class="flex items-start justify-between">
                                 <div class="relative">
-                                    {% if i.Img %}
-                                    <img src="{{ i.Img.url }}" class="w-16 h-16 rounded-lg object-cover border border-gray-100" alt="guest">
-                                    {% else %}
                                     <div class="w-16 h-16 rounded-lg bg-gray-50 flex items-center justify-center text-xl font-black text-gray-200 uppercase">
-                                        {{ i.Name|slice:":1" }}{{ i.Surname|slice:":1" }}
+                                        {{ i.first_name|slice:":1" }}{{ i.last_name|slice:":1" }}
                                     </div>
-                                    {% endif %}
                                     <div class="absolute -top-2 -right-2 px-2 py-0.5 bg-blue-500 text-[8px] font-black text-white rounded-full shadow-sm">WEB</div>
                                 </div>
                                 <div class="text-right">
-                                    <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest">ID #{{ i.Id }}</p>
-                                    <p class="text-[10px] font-bold text-amber-600 uppercase mt-1">{{ i.City }}</p>
+                                    <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest">ID #{{ i.id }}</p>
+                                    <p class="text-[10px] font-bold text-amber-600 uppercase mt-1">{{ i.city }}</p>
                                 </div>
                             </div>
                             
                             <div>
-                                <h4 class="font-black text-gray-900 uppercase tracking-tight">{{ i.Name }} {{ i.Surname }}</h4>
-                                <p class="text-xs text-gray-400 truncate">{{ i.Email }}</p>
+                                <h4 class="font-black text-gray-900 uppercase tracking-tight">{{ i.first_name }} {{ i.last_name }}</h4>
+                                <p class="text-xs text-gray-400 truncate">{{ i.email }}</p>
                             </div>
 
                             <div class="pt-4 grid grid-cols-2 gap-4 border-t border-gray-50">
                                 <div>
                                     <p class="text-[8px] font-black text-gray-400 uppercase tracking-widest">Check In</p>
-                                    <p class="text-[10px] font-bold text-gray-700">{{ i.Check_in }}</p>
+                                    <p class="text-[10px] font-bold text-gray-700">{{ i.check_in }}</p>
                                 </div>
                                 <div>
                                     <p class="text-[8px] font-black text-gray-400 uppercase tracking-widest">Check Out</p>
-                                    <p class="text-[10px] font-bold text-gray-700">{{ i.Check_out }}</p>
+                                    <p class="text-[10px] font-bold text-gray-700">{{ i.check_out }}</p>
                                 </div>
                             </div>
                         </div>
                         <div class="px-6 py-4 bg-gray-50 flex items-center justify-around opacity-60 group-hover:opacity-100 transition-opacity">
-                            <a href="{% url 'Edit_online_Booking' id=i.Id %}" class="text-[10px] font-black uppercase tracking-widest text-blue-600 hover:text-blue-800 transition-colors">Edit</a>
+                            <a href="{% url 'Edit_online_Booking' id=i.id %}" class="text-[10px] font-black uppercase tracking-widest text-blue-600 hover:text-blue-800 transition-colors">Edit</a>
                             <div class="w-px h-4 bg-gray-200"></div>
-                            <a href="{% url 'delete' id=i.Id %}" class="text-[10px] font-black uppercase tracking-widest text-rose-600 hover:text-rose-800 transition-colors">Delete</a>
+                            <a href="{% url 'delete' id=i.id %}" class="text-[10px] font-black uppercase tracking-widest text-rose-600 hover:text-rose-800 transition-colors">Delete</a>
                         </div>
                     </div>
                     {% endfor %}

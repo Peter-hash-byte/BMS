@@ -42,6 +42,7 @@
             <!-- Form -->
             <form class="mt-8 space-y-6" method="POST" action="">
                 {% csrf_token %}
+                <input type="hidden" name="next" value="{{ next }}">
                 <div class="space-y-4">
                     <div class="relative group">
                         <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-500 group-focus-within:text-emerald-400 transition-colors">

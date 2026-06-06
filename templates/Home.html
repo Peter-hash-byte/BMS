@@ -68,20 +68,20 @@
             <form method="GET" action="{% url 'OnlineBooking' %}" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 items-end">
                 <div class="space-y-3">
                     <label class="block text-[10px] font-black uppercase tracking-[0.3em] text-amber-500 ml-1">Check In</label>
-                    <input type="date" name="Check_in" class="w-full bg-slate-800/50 border-b-2 border-slate-700 focus:border-amber-500 outline-none px-4 py-3 transition-all text-sm font-bold rounded-t-lg text-white" required>
+                    <input type="date" name="check_in" class="w-full bg-slate-800/50 border-b-2 border-slate-700 focus:border-amber-500 outline-none px-4 py-3 transition-all text-sm font-bold rounded-t-lg text-white" required>
                 </div>
                 <div class="space-y-3">
                     <label class="block text-[10px] font-black uppercase tracking-[0.3em] text-amber-500 ml-1">Check Out</label>
-                    <input type="date" name="Check_out" class="w-full bg-slate-800/50 border-b-2 border-slate-700 focus:border-amber-500 outline-none px-4 py-3 transition-all text-sm font-bold rounded-t-lg text-white" required>
+                    <input type="date" name="check_out" class="w-full bg-slate-800/50 border-b-2 border-slate-700 focus:border-amber-500 outline-none px-4 py-3 transition-all text-sm font-bold rounded-t-lg text-white" required>
                 </div>
                 <div class="space-y-3">
                     <label class="block text-[10px] font-black uppercase tracking-[0.3em] text-amber-500 ml-1">Adults</label>
                     <div class="relative">
-                        <select name="ADULT" class="w-full bg-slate-800/50 border-b-2 border-slate-700 focus:border-amber-500 outline-none px-4 py-3 transition-all text-sm font-bold rounded-t-lg appearance-none cursor-pointer text-white">
-                            <option value="1 ADULT" class="bg-slate-900 text-white">1 Guest</option>
-                            <option value="2 ADULT" class="bg-slate-900 text-white">2 Guests</option>
-                            <option value="3 ADULT" class="bg-slate-900 text-white">3 Guests</option>
-                            <option value="4 ADULT" class="bg-slate-900 text-white">4+ Guests</option>
+                        <select name="adults" class="w-full bg-slate-800/50 border-b-2 border-slate-700 focus:border-amber-500 outline-none px-4 py-3 transition-all text-sm font-bold rounded-t-lg appearance-none cursor-pointer text-white">
+                            <option value="1" class="bg-slate-900 text-white">1 Guest</option>
+                            <option value="2" class="bg-slate-900 text-white">2 Guests</option>
+                            <option value="3" class="bg-slate-900 text-white">3 Guests</option>
+                            <option value="4" class="bg-slate-900 text-white">4+ Guests</option>
                         </select>
                         <i class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none text-[10px]"></i>
                     </div>
@@ -89,10 +89,10 @@
                 <div class="space-y-3">
                     <label class="block text-[10px] font-black uppercase tracking-[0.3em] text-amber-500 ml-1">Children</label>
                     <div class="relative">
-                        <select name="CHILDREN" class="w-full bg-slate-800/50 border-b-2 border-slate-700 focus:border-amber-500 outline-none px-4 py-3 transition-all text-sm font-bold rounded-t-lg appearance-none cursor-pointer text-white">
-                            <option value="0 CHILDREN" class="bg-slate-900 text-white">No Children</option>
-                            <option value="1 CHILDREN" class="bg-slate-900 text-white">1 Child</option>
-                            <option value="2 CHILDREN" class="bg-slate-900 text-white">2 Children</option>
+                        <select name="children" class="w-full bg-slate-800/50 border-b-2 border-slate-700 focus:border-amber-500 outline-none px-4 py-3 transition-all text-sm font-bold rounded-t-lg appearance-none cursor-pointer text-white">
+                            <option value="0" class="bg-slate-900 text-white">No Children</option>
+                            <option value="1" class="bg-slate-900 text-white">1 Child</option>
+                            <option value="2" class="bg-slate-900 text-white">2 Children</option>
                         </select>
                         <i class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none text-[10px]"></i>
                     </div>
@@ -158,8 +158,8 @@
                 <div class="px-4 pb-12">
                    <div class="bg-white group shadow-sm hover:shadow-xl transition-all duration-300 rounded-xl overflow-hidden border border-gray-100">
                      <div class="relative overflow-hidden aspect-[4/3]">
-                       {% if room.Room_Image %}
-                       <img src="{{ room.Room_Image.url }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="{{ room.Room_Type }}">
+                       {% if room.image %}
+                       <img src="{{ room.image.url }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="{{ room.room_type }}">
                        {% endif %}
                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                           <a href="{% url 'OnlineBooking' %}" class="bg-amber-500 text-black px-8 py-3 font-bold uppercase tracking-widest text-xs shadow-lg hover:bg-amber-600 transition-colors">Book Now</a>
@@ -169,11 +169,11 @@
                          <div class="flex justify-center space-x-1 text-amber-500 text-xs">
                             <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                          </div>
-                         <h3 class="text-xl font-bold uppercase tracking-wide text-gray-900">{{ room.Room_Type }}</h3>
+                         <h3 class="text-xl font-bold uppercase tracking-wide text-gray-900">{{ room.room_type }}</h3>
                          <div class="text-amber-600 font-black text-2xl">
-                             <span class="text-sm font-normal text-gray-400 mr-1">$</span>{{ room.Room_Price }}<span class="text-xs font-normal text-gray-400">/night</span>
+                             <span class="text-sm font-normal text-gray-400 mr-1">$</span>{{ room.price }}<span class="text-xs font-normal text-gray-400">/night</span>
                          </div>
-                         <p class="text-sm text-gray-500 line-clamp-2 italic leading-relaxed">{{ room.Room_Facility }}</p>
+                         <p class="text-sm text-gray-500 line-clamp-2 italic leading-relaxed">{{ room.facility }}</p>
                      </div>
                   </div>
                 </div>

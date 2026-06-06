@@ -21,7 +21,7 @@
     <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
         <div class="px-6 py-4 border-b border-gray-50 bg-gray-50/50">
             <h2 class="font-bold text-gray-900 uppercase tracking-tight text-sm flex items-center">
-                <i class="fa fa-bed mr-2 text-amber-500"></i> Room Details: {{ data.Room_Number }}
+                <i class="fa fa-bed mr-2 text-amber-500"></i> Room Details: {{ data.room_number }}
             </h2>
         </div>
         <div class="p-8">
@@ -32,53 +32,53 @@
                     <!-- Room Identification -->
                     <div class="space-y-1">
                         <label class="block text-xs font-bold uppercase text-gray-500">Room Number</label>
-                        <select name="Room_Number" class="w-full bg-gray-100 border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-500 cursor-not-allowed outline-none" readonly>
-                            <option value="Room101" {% if data.Room_Number == "Room101" %}selected{% endif %}>Room 101</option>
-                            <option value="Room102" {% if data.Room_Number == "Room102" %}selected{% endif %}>Room 102</option>
-                            <option value="Room103" {% if data.Room_Number == "Room103" %}selected{% endif %}>Room 103</option>
-                            <option value="Room104" {% if data.Room_Number == "Room104" %}selected{% endif %}>Room 104</option>
+                        <select name="room_number" class="w-full bg-gray-100 border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-500 cursor-not-allowed outline-none" readonly>
+                            <option value="Room101" {% if data.room_number == "Room101" %}selected{% endif %}>Room 101</option>
+                            <option value="Room102" {% if data.room_number == "Room102" %}selected{% endif %}>Room 102</option>
+                            <option value="Room103" {% if data.room_number == "Room103" %}selected{% endif %}>Room 103</option>
+                            <option value="Room104" {% if data.room_number == "Room104" %}selected{% endif %}>Room 104</option>
                         </select>
                     </div>
 
                     <div class="space-y-1">
                         <label class="block text-xs font-bold uppercase text-gray-500">Room Type</label>
-                        <select name="Room_Type" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
-                            <option value="Delux" {% if data.Room_Type == "Delux" %}selected{% endif %}>Delux</option>
-                            <option value="Super Delux" {% if data.Room_Type == "Super Delux" %}selected{% endif %}>Super Delux</option>
-                            <option value="Single" {% if data.Room_Type == "Single" %}selected{% endif %}>Single</option>
-                            <option value="Double" {% if data.Room_Type == "Double" %}selected{% endif %}>Double</option>
+                        <select name="room_type" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
+                            <option value="Delux" {% if data.room_type == "Delux" %}selected{% endif %}>Delux</option>
+                            <option value="Super Delux" {% if data.room_type == "Super Delux" %}selected{% endif %}>Super Delux</option>
+                            <option value="Single" {% if data.room_type == "Single" %}selected{% endif %}>Single</option>
+                            <option value="Double" {% if data.room_type == "Double" %}selected{% endif %}>Double</option>
                         </select>
                     </div>
 
                     <div class="space-y-1">
                         <label class="block text-xs font-bold uppercase text-gray-500">Floor Assignment</label>
-                        <select name="Room_Floor" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm" required>
-                            <option value="Floor_G" {% if data.Room_Floor == "Floor_G" %}selected{% endif %}>Ground Floor</option>
-                            <option value="Floor_First" {% if data.Room_Floor == "Floor_First" %}selected{% endif %}>First Floor</option>
-                            <option value="Floor_Second" {% if data.Room_Floor == "Floor_Second" %}selected{% endif %}>Second Floor</option>
-                            <option value="Floor_Thirt" {% if data.Room_Floor == "Floor_Thirt" %}selected{% endif %}>Third Floor</option>
+                        <select name="floor" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm" required>
+                            <option value="Floor_G" {% if data.floor == "Floor_G" %}selected{% endif %}>Ground Floor</option>
+                            <option value="Floor_First" {% if data.floor == "Floor_First" %}selected{% endif %}>First Floor</option>
+                            <option value="Floor_Second" {% if data.floor == "Floor_Second" %}selected{% endif %}>Second Floor</option>
+                            <option value="Floor_Thirt" {% if data.floor == "Floor_Thirt" %}selected{% endif %}>Third Floor</option>
                         </select>
                     </div>
 
                     <div class="space-y-1">
                         <label class="block text-xs font-bold uppercase text-gray-500">Price Per Night ($)</label>
-                        <input type="text" name="Room_Price" value="{{ data.Room_Price }}" 
+                        <input type="text" name="price" value="{{ data.price }}" 
                                class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm">
                     </div>
 
                     <div class="space-y-1 md:col-span-2">
                         <label class="block text-xs font-bold uppercase text-gray-500">Facilities & Amenities</label>
-                        <input type="text" name="Room_Facility" value="{{ data.Room_Facility }}" 
+                        <input type="text" name="facility" value="{{ data.facility }}" 
                                class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all text-sm" placeholder="e.g. WiFi, AC, Balcony, Mini-bar">
                     </div>
 
                     <div class="space-y-1 md:col-span-2">
                         <label class="block text-xs font-bold uppercase text-gray-500">Room Gallery Image</label>
                         <div class="mt-2 flex items-center space-x-4">
-                            {% if data.Room_Image %}
-                            <img src="{{ data.Room_Image.url }}" class="w-24 h-24 rounded-lg object-cover border border-gray-200 shadow-sm" alt="Current room image">
+                            {% if data.image %}
+                            <img src="{{ data.image.url }}" class="w-24 h-24 rounded-lg object-cover border border-gray-200 shadow-sm" alt="Current room image">
                             {% endif %}
-                            <input type="file" name="Room_Image" 
+                            <input type="file" name="image" 
                                    class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 text-sm file:mr-4 file:py-1 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-amber-100 file:text-amber-700 hover:file:bg-amber-200 cursor-pointer">
                         </div>
                     </div>

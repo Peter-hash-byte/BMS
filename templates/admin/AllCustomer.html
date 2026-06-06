@@ -58,35 +58,35 @@
                         {% if data %}
                         {% for i in data %}
                         <tr class="hover:bg-gray-50/80 transition-colors group">
-                            <td class="px-6 py-4 text-xs font-bold text-gray-400">#{{ i.Customer_Id }}</td>
+                            <td class="px-6 py-4 text-xs font-bold text-gray-400">#{{ i.id }}</td>
                             <td class="px-6 py-4">
                                 <div class="flex items-center space-x-3">
                                     <div class="w-8 h-8 rounded-full bg-amber-50 flex items-center justify-center text-xs font-black text-amber-600">
-                                        {{ i.First_Name|slice:":1" }}{{ i.Last_Name|slice:":1" }}
+                                        {{ i.first_name|slice:":1" }}{{ i.last_name|slice:":1" }}
                                     </div>
                                     <div>
-                                        <p class="text-sm font-bold text-gray-900 leading-none">{{ i.First_Name }} {{ i.Last_Name }}</p>
-                                        <p class="text-[10px] text-gray-400 uppercase tracking-tighter mt-1">{{ i.Email }}</p>
+                                        <p class="text-sm font-bold text-gray-900 leading-none">{{ i.first_name }} {{ i.last_name }}</p>
+                                        <p class="text-[10px] text-gray-400 uppercase tracking-tighter mt-1">{{ i.email }}</p>
                                     </div>
                                 </div>
                             </td>
                             <td class="px-6 py-4">
                                 <span class="px-2.5 py-1 rounded bg-gray-100 text-gray-600 text-[10px] font-black uppercase tracking-widest">
-                                    Room {{ i.Room_Number }}
+                                    Room {{ i.room.room_number }}
                                 </span>
                             </td>
-                            <td class="px-6 py-4 text-xs font-medium text-gray-500">{{ i.Check_in }}</td>
+                            <td class="px-6 py-4 text-xs font-medium text-gray-500">{{ i.check_in }}</td>
                             <td class="px-6 py-4">
                                 <span class="flex items-center text-[10px] font-black uppercase tracking-widest text-emerald-500">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-2"></span> Active
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-2"></span> {{ i.status }}
                                 </span>
                             </td>
                             <td class="px-6 py-4 text-right">
                                 <div class="flex items-center justify-end space-x-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <a href="{% url 'EditCustomer' id=i.Customer_Id %}" class="w-8 h-8 rounded bg-blue-50 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all">
+                                    <a href="{% url 'EditCustomer' id=i.id %}" class="w-8 h-8 rounded bg-blue-50 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all">
                                         <i class="fa fa-pencil text-xs"></i>
                                     </a>
-                                    <a href="{% url 'AllCustpage_Delete' id=i.Customer_Id %}" 
+                                    <a href="{% url 'AllCustpage_Delete' id=i.id %}" 
                                        class="w-8 h-8 rounded bg-rose-50 text-rose-600 flex items-center justify-center hover:bg-rose-600 hover:text-white transition-all"
                                        onclick="return confirm('Delete this reservation?')">
                                         <i class="fa fa-trash text-xs"></i>
@@ -112,34 +112,30 @@
                     <div class="bg-white border border-gray-100 rounded-xl overflow-hidden group hover:shadow-md transition-shadow">
                         <div class="p-6 text-center space-y-4">
                             <div class="relative inline-block">
-                                {% if i.Upload_Image %}
-                                <img src="{{ i.Upload_Image.url }}" class="w-20 h-20 rounded-full object-cover border-4 border-amber-50 mx-auto" alt="guest">
-                                {% else %}
                                 <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-auto text-xl font-black text-gray-300 uppercase">
-                                    {{ i.First_Name|slice:":1" }}{{ i.Last_Name|slice:":1" }}
+                                    {{ i.first_name|slice:":1" }}{{ i.last_name|slice:":1" }}
                                 </div>
-                                {% endif %}
                                 <div class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-emerald-500 border-4 border-white"></div>
                             </div>
                             <div>
-                                <h4 class="font-black text-gray-900 uppercase tracking-tight">{{ i.First_Name }} {{ i.Last_Name }}</h4>
-                                <p class="text-[10px] font-bold text-amber-600 uppercase tracking-[0.2em] mt-1">{{ i.Select_Room }}</p>
+                                <h4 class="font-black text-gray-900 uppercase tracking-tight">{{ i.first_name }} {{ i.last_name }}</h4>
+                                <p class="text-[10px] font-bold text-amber-600 uppercase tracking-[0.2em] mt-1">{{ i.room.room_type }}</p>
                             </div>
                             <div class="pt-4 grid grid-cols-2 gap-4 border-t border-gray-50">
                                 <div>
                                     <p class="text-[8px] font-black text-gray-400 uppercase tracking-widest">Room</p>
-                                    <p class="text-xs font-bold text-gray-700">{{ i.Room_Number }}</p>
+                                    <p class="text-xs font-bold text-gray-700">{{ i.room.room_number }}</p>
                                 </div>
                                 <div>
                                     <p class="text-[8px] font-black text-gray-400 uppercase tracking-widest">Check In</p>
-                                    <p class="text-xs font-bold text-gray-700">{{ i.Check_in }}</p>
+                                    <p class="text-xs font-bold text-gray-700">{{ i.check_in }}</p>
                                 </div>
                             </div>
                         </div>
                         <div class="px-6 py-4 bg-gray-50 flex items-center justify-around opacity-60 group-hover:opacity-100 transition-opacity">
-                            <a href="{% url 'EditCustomer' id=i.Customer_Id %}" class="text-xs font-black uppercase tracking-widest text-blue-600 hover:text-blue-800 transition-colors">Edit</a>
+                            <a href="{% url 'EditCustomer' id=i.id %}" class="text-xs font-black uppercase tracking-widest text-blue-600 hover:text-blue-800 transition-colors">Edit</a>
                             <div class="w-px h-4 bg-gray-200"></div>
-                            <a href="{% url 'AllCustpage_Delete' id=i.Customer_Id %}" class="text-xs font-black uppercase tracking-widest text-rose-600 hover:text-rose-800 transition-colors">Delete</a>
+                            <a href="{% url 'AllCustpage_Delete' id=i.id %}" class="text-xs font-black uppercase tracking-widest text-rose-600 hover:text-rose-800 transition-colors">Delete</a>
                         </div>
                     </div>
                     {% endfor %}
